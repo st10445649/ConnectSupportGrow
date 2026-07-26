@@ -1,0 +1,6 @@
+@ConnectGrowAPI_HostAddress = http://localhost:5212
+
+GET {{ConnectGrowAPI_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
