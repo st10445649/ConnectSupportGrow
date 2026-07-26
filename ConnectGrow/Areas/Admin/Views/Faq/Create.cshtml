@@ -1,0 +1,70 @@
+@{
+    ViewBag.Title = "Create FAQ";
+}
+
+<section class="bg-white border-b border-gray-200 py-8">
+    <div class="container mx-auto px-4">
+        <a href="/admin/faq" class="text-primary-600 hover:text-primary-700 font-semibold text-sm">← Back to FAQ</a>
+        <h1 class="text-3xl font-bold text-gray-900 mt-2">Create New FAQ Question</h1>
+    </div>
+</section>
+
+<section class="py-12 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-2xl">
+        
+        <form method="post" action="/admin/faq/save" class="bg-white rounded-lg shadow p-8 space-y-6">
+            
+            <!-- Question -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">Question *</label>
+                <input type="text" name="question" required placeholder="What is your question?"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+            </div>
+            
+            <!-- Answer -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">Answer *</label>
+                <textarea name="answer" required rows="8" placeholder="Detailed answer..."
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+            </div>
+            
+            <!-- Category -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">Category *</label>
+                <select name="category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+                    <option value="">Select a category...</option>
+                    <option>Getting Started</option>
+                    <option>Payments & Refunds</option>
+                    <option>CPD & Certificates</option>
+                    <option>Technical Support</option>
+                </select>
+            </div>
+            
+            <!-- Order -->
+            <div>
+                <label class="block text-sm font-semibold text-gray-900 mb-2">Display Order</label>
+                <input type="number" name="order" min="1" placeholder="1"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <p class="text-xs text-gray-600 mt-1">Lower numbers appear first</p>
+            </div>
+            
+            <!-- Publish -->
+            <div>
+                <label class="flex items-center">
+                    <input type="checkbox" name="published" checked class="w-4 h-4">
+                    <span class="ml-2 text-gray-900">Publish immediately</span>
+                </label>
+            </div>
+            
+            <!-- Buttons -->
+            <div class="flex gap-4 pt-6 border-t border-gray-200">
+                <button type="submit" class="flex-1 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-bold">
+                    Save Question
+                </button>
+                <a href="/admin/faq" class="flex-1 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-bold text-center">
+                    Cancel
+                </a>
+            </div>
+        </form>
+    </div>
+</section>

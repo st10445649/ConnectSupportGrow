@@ -1,0 +1,124 @@
+@{
+    ViewBag.Title = "Webinar Evaluation";
+}
+
+<section class="bg-white border-b border-gray-200 py-4">
+    <div class="container mx-auto px-4">
+        <a href="/dashboard" class="text-primary-600 hover:text-primary-700 font-semibold text-sm">← Back to Dashboard</a>
+        <h1 class="text-2xl font-bold text-gray-900 mt-2">Webinar Evaluation</h1>
+    </div>
+</section>
+
+<section class="py-12 bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4 max-w-2xl">
+        
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">How was this webinar?</h2>
+            <p class="text-gray-700 mb-8">Your feedback helps us improve our training programs</p>
+            
+            <form method="post" action="/dashboard/evaluations/submit" class="space-y-8">
+                
+                <!-- Star Rating -->
+                <div>
+                    <label class="block text-lg font-bold text-gray-900 mb-3">Overall Rating</label>
+                    <div class="flex gap-4 text-5xl">
+                        <button type="button" class="star-btn hover:scale-110 transition-transform" data-rating="1">⭐</button>
+                        <button type="button" class="star-btn hover:scale-110 transition-transform" data-rating="2">⭐</button>
+                        <button type="button" class="star-btn hover:scale-110 transition-transform" data-rating="3">⭐</button>
+                        <button type="button" class="star-btn hover:scale-110 transition-transform" data-rating="4">⭐</button>
+                        <button type="button" class="star-btn hover:scale-110 transition-transform" data-rating="5">⭐</button>
+                    </div>
+                    <input type="hidden" name="rating" id="ratingValue" required>
+                </div>
+                
+                <!-- What You Learned -->
+                <div>
+                    <label class="block text-lg font-bold text-gray-900 mb-3">What did you learn? *</label>
+                    <textarea name="whatLearned" required rows="4" placeholder="Share the key insights or skills you gained..."
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                    <p class="text-xs text-gray-600 mt-1">Minimum 10 characters</p>
+                </div>
+                
+                <!-- How to Improve -->
+                <div>
+                    <label class="block text-lg font-bold text-gray-900 mb-3">How could we improve? *</label>
+                    <textarea name="improvement" required rows="4" placeholder="Any suggestions for future webinars..."
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                </div>
+                
+                <!-- Would Recommend -->
+                <div>
+                    <label class="block text-lg font-bold text-gray-900 mb-4">Would you recommend this webinar? *</label>
+                    <div class="space-y-3">
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="recommend" value="yes" required class="w-4 h-4">
+                            <span class="ml-3 font-semibold text-gray-900">Yes, definitely! 👍</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="recommend" value="maybe" required class="w-4 h-4">
+                            <span class="ml-3 font-semibold text-gray-900">Maybe, with improvements</span>
+                        </label>
+                        <label class="flex items-center p-3 border border-gray-300 rounded-lg cursor-pointer hover:bg-gray-50">
+                            <input type="radio" name="recommend" value="no" required class="w-4 h-4">
+                            <span class="ml-3 font-semibold text-gray-900">Not really 👎</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Presenter Assessment -->
+                <div>
+                    <label class="block text-lg font-bold text-gray-900 mb-4">How would you rate the presenter?</label>
+                    <div class="space-y-2 text-sm">
+                        <label class="flex items-center">
+                            <input type="radio" name="presenter" value="excellent" class="w-4 h-4">
+                            <span class="ml-2 text-gray-900">Excellent - knowledgeable, engaging, clear</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="presenter" value="good" class="w-4 h-4">
+                            <span class="ml-2 text-gray-900">Good - covered material well</span>
+                        </label>
+                        <label class="flex items-center">
+                            <input type="radio" name="presenter" value="okay" class="w-4 h-4">
+                            <span class="ml-2 text-gray-900">Okay - needs improvement</span>
+                        </label>
+                    </div>
+                </div>
+                
+                <!-- Contact Permission -->
+                <label class="flex items-start p-4 border border-gray-200 rounded-lg cursor-pointer hover:bg-gray-50">
+                    <input type="checkbox" name="contactPermission" class="w-4 h-4 mt-1">
+                    <span class="ml-3 text-gray-700">
+                        You may contact me for feedback or follow-up about this webinar
+                    </span>
+                </label>
+                
+                <!-- Buttons -->
+                <div class="flex gap-4 pt-4">
+                    <button type="submit" class="flex-1 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-bold text-lg">
+                        Submit Evaluation
+                    </button>
+                    <a href="/dashboard" class="flex-1 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-bold text-center">
+                        Skip for Now
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+<script>
+// Star rating interaction
+document.querySelectorAll('.star-btn').forEach(btn => {
+    btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        const rating = this.dataset.rating;
+        document.getElementById('ratingValue').value = rating;
+        
+        // Update UI
+        document.querySelectorAll('.star-btn').forEach((b, idx) => {
+            b.style.opacity = idx < rating ? '1' : '0.3';
+        });
+    });
+});
+</script>

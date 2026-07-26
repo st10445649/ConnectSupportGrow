@@ -1,0 +1,399 @@
+
+
+@{
+    ViewBag.Title = "My Dashboard";
+}
+
+<section class="gradient-primary py-12 md:py-16">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-2">
+            Welcome back, Sarah! 👋
+        </h1>
+        <p class="text-lg text-gray-700">
+            Here's an overview of your learning journey
+        </p>
+    </div>
+</section>
+
+<section class="py-8">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            
+            @* Card 1: CPD Points *@
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Total CPD Points</p>
+                <p class="text-4xl font-bold text-primary-600">28</p>
+                <p class="text-xs text-gray-500 mt-2">earned so far this year</p>
+            </div>
+            
+            @* Card 2: Upcoming Webinars *@
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-secondary-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Upcoming Bookings</p>
+                <p class="text-4xl font-bold text-secondary-600">3</p>
+                <p class="text-xs text-gray-500 mt-2">scheduled this month</p>
+            </div>
+            
+            @* Card 3: Total Attended *@
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-accent-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Webinars Attended</p>
+                <p class="text-4xl font-bold text-accent-600">7</p>
+                <p class="text-xs text-gray-500 mt-2">webinars completed</p>
+            </div>
+            
+            @* Card 4: Certificates *@
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Certificates</p>
+                <p class="text-4xl font-bold text-green-600">5</p>
+                <p class="text-xs text-gray-500 mt-2">available to download</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-8 bg-gray-50 min-h-screen">
+    <div class="container mx-auto px-4">
+        
+        <div x-data="{ activeTab: 'upcoming' }" class="space-y-6">
+            
+            
+            <div class="flex gap-2 bg-white rounded-lg p-2 shadow border border-gray-200 overflow-x-auto">
+                <button x-on:click="activeTab = 'upcoming'" 
+                    :class="activeTab === 'upcoming' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth whitespace-nowrap">
+                    📅 Upcoming (3)
+                </button>
+                <button x-on:click="activeTab = 'past'" 
+                    :class="activeTab === 'past' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth whitespace-nowrap">
+                    ✓ Past (7)
+                </button>
+                <button x-on:click="activeTab = 'recordings'" 
+                    :class="activeTab === 'recordings' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth whitespace-nowrap">
+                    🎥 Recordings (5)
+                </button>
+                <button x-on:click="activeTab = 'cpd'" 
+                    :class="activeTab === 'cpd' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
+                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth whitespace-nowrap">
+                    🎓 CPD Points
+                </button>
+            </div>
+            
+            <div x-show="activeTab === 'upcoming'" class="space-y-4">
+                
+                @* Booking Card 1 *@
+                <div class="bg-white rounded-lg shadow border-l-4 border-primary-500 p-6">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        
+                        @* Icon *@
+                        <div class="w-24 h-24 bg-gradient-primary rounded-lg flex items-center justify-center text-5xl flex-shrink-0">
+                            🧠
+                        </div>
+                        
+                        @* Content *@
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">
+                                Autism Spectrum Awareness in the Classroom
+                            </h3>
+                            <p class="text-gray-700 mb-4">
+                                Expert-led session on supporting neurodivergent learners in educational settings.
+                            </p>
+                            
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">Date & Time</p>
+                                    <p class="text-sm font-semibold text-gray-900">July 15, 2:00 PM</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">Duration</p>
+                                    <p class="text-sm font-semibold text-gray-900">90 minutes</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">Status</p>
+                                    <p class="text-sm font-semibold text-green-600">Confirmed ✓</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">CPD Points</p>
+                                    <p class="text-sm font-semibold text-gray-900">5 Points</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex gap-3 flex-wrap">
+                                <a href="https://zoom.us/..." target="_blank" class="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 font-semibold text-sm">
+                                    🔗 Join Meeting
+                                </a>
+                                <button class="px-4 py-2 bg-secondary-100 text-secondary-700 rounded hover:bg-secondary-200 font-semibold text-sm">
+                                    + Add to Calendar
+                                </button>
+                                <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-semibold text-sm">
+                                    📧 Get Details
+                                </button>
+                            </div>
+                        </div>
+                        
+                        @* Close/Countdown *@
+                        <div class="text-right flex-shrink-0">
+                            <p class="text-xs text-gray-600 font-semibold">Starts in</p>
+                            <p class="text-2xl font-bold text-primary-600">8d</p>
+                            <p class="text-xs text-gray-600">2h 30m</p>
+                        </div>
+                    </div>
+                </div>
+                
+                @* Booking Card 2 *@
+                <div class="bg-white rounded-lg shadow border-l-4 border-secondary-500 p-6">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="w-24 h-24 bg-gradient-accent rounded-lg flex items-center justify-center text-5xl flex-shrink-0">
+                            📚
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-2">
+                                Dyslexia: Identification & Intervention Strategies
+                            </h3>
+                            <p class="text-gray-700 mb-4">
+                                Comprehensive guide to identifying dyslexia and implementing evidence-based interventions.
+                            </p>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">Date & Time</p>
+                                    <p class="text-sm font-semibold text-gray-900">July 22, 3:30 PM</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">Duration</p>
+                                    <p class="text-sm font-semibold text-gray-900">120 minutes</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">Status</p>
+                                    <p class="text-sm font-semibold text-green-600">Confirmed ✓</p>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-600 font-semibold">CPD Points</p>
+                                    <p class="text-sm font-semibold text-gray-900">8 Points</p>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 flex-wrap">
+                                <a href="https://zoom.us/..." target="_blank" class="px-4 py-2 bg-secondary-500 text-white rounded hover:bg-secondary-600 font-semibold text-sm">
+                                    🔗 Join Meeting
+                                </a>
+                                <button class="px-4 py-2 bg-secondary-100 text-secondary-700 rounded hover:bg-secondary-200 font-semibold text-sm">
+                                    + Add to Calendar
+                                </button>
+                                <button class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-semibold text-sm">
+                                    📧 Get Details
+                                </button>
+                            </div>
+                        </div>
+                        <div class="text-right flex-shrink-0">
+                            <p class="text-xs text-gray-600 font-semibold">Starts in</p>
+                            <p class="text-2xl font-bold text-secondary-600">15d</p>
+                            <p class="text-xs text-gray-600">3h 30m</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 text-center py-4">Showing 2 of 3 upcoming webinars</p>
+            </div>
+            
+            <div x-show="activeTab === 'past'" class="space-y-4">
+                
+                @* Past Booking Card 1 *@
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center text-5xl flex-shrink-0">
+                            💬
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">
+                                AAC (Augmentative & Alternative Communication) Basics
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-4">Attended: June 28, 2026</p>
+                            <p class="text-gray-700 mb-4">
+                                Introduction to AAC systems and how to implement them effectively in educational settings.
+                            </p>
+                            <div class="flex gap-3 flex-wrap">
+                                <a href="/dashboard/certificates/3" class="px-4 py-2 bg-green-100 text-green-700 rounded hover:bg-green-200 font-semibold text-sm">
+                                    📜 View Certificate
+                                </a>
+                                <a href="/dashboard/receipts/3" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-semibold text-sm">
+                                    📄 Download Receipt
+                                </a>
+                                <a href="/dashboard/evaluations/3" class="px-4 py-2 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 font-semibold text-sm">
+                                    ⭐ View Evaluation
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text-right flex-shrink-0">
+                            <p class="text-sm font-bold text-green-600">Attended ✓</p>
+                            <p class="text-2xl font-bold text-yellow-500 mt-2">8 CPD</p>
+                        </div>
+                    </div>
+                </div>
+                
+                @* Past Booking Card 2 *@
+                <div class="bg-white rounded-lg shadow p-6 border-l-4 border-green-500">
+                    <div class="flex flex-col md:flex-row gap-6">
+                        <div class="w-24 h-24 bg-gray-200 rounded-lg flex items-center justify-center text-5xl flex-shrink-0">
+                            👂
+                        </div>
+                        <div class="flex-grow">
+                            <h3 class="text-xl font-bold text-gray-900 mb-1">
+                                Hearing Loss & Classroom Accommodations
+                            </h3>
+                            <p class="text-sm text-gray-600 mb-4">Attended: June 14, 2026</p>
+                            <p class="text-gray-700 mb-4">
+                                Understanding hearing loss and creating accessible classroom environments for deaf and hard of hearing students.
+                            </p>
+                            <div class="flex gap-3 flex-wrap">
+                                <a href="/dashboard/certificates/2" class="px-4 py-2 bg-green-100 text-green-700 rounded hover:bg-green-200 font-semibold text-sm">
+                                    📜 View Certificate
+                                </a>
+                                <a href="/dashboard/receipts/2" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-semibold text-sm">
+                                    📄 Download Receipt
+                                </a>
+                                <a href="/dashboard/evaluations/2" class="px-4 py-2 bg-blue-100 text-blue-700 rounded hover:bg-blue-200 font-semibold text-sm">
+                                    ⭐ View Evaluation
+                                </a>
+                            </div>
+                        </div>
+                        <div class="text-right flex-shrink-0">
+                            <p class="text-sm font-bold text-green-600">Attended ✓</p>
+                            <p class="text-2xl font-bold text-yellow-500 mt-2">5 CPD</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 text-center py-4">Showing 2 of 7 past webinars</p>
+            </div>
+            
+            
+            <div x-show="activeTab === 'recordings'" class="space-y-4">
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <h3 class="text-xl font-bold text-gray-900 mb-4">Available Recordings</h3>
+                    
+                    @* Recording 1 *@
+                    <div class="border border-gray-200 rounded-lg p-4 mb-4">
+                        <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+                            <div>
+                                <p class="font-bold text-gray-900">AAC (Augmentative & Alternative Communication) Basics</p>
+                                <p class="text-sm text-gray-600">Recorded June 28, 2026</p>
+                                <p class="text-sm text-gray-500 mt-1">Access expires: July 28, 2026</p>
+                            </div>
+                            <div class="flex gap-2 flex-wrap">
+                                <a href="/dashboard/recordings/3" class="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 font-semibold text-sm">
+                                    ▶ Watch Recording
+                                </a>
+                                <a href="#" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-semibold text-sm">
+                                    ⬇ Download
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mt-3 w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-primary-500 h-2 rounded-full" style="width: 65%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">65% watched</p>
+                    </div>
+                    
+                    @* Recording 2 *@
+                    <div class="border border-gray-200 rounded-lg p-4 mb-4">
+                        <div class="flex flex-col md:flex-row gap-4 md:items-center md:justify-between">
+                            <div>
+                                <p class="font-bold text-gray-900">Hearing Loss & Classroom Accommodations</p>
+                                <p class="text-sm text-gray-600">Recorded June 14, 2026</p>
+                                <p class="text-sm text-gray-500 mt-1">Access expires: July 14, 2026</p>
+                            </div>
+                            <div class="flex gap-2 flex-wrap">
+                                <a href="/dashboard/recordings/2" class="px-4 py-2 bg-primary-500 text-white rounded hover:bg-primary-600 font-semibold text-sm">
+                                    ▶ Watch Recording
+                                </a>
+                                <a href="#" class="px-4 py-2 bg-gray-100 text-gray-700 rounded hover:bg-gray-200 font-semibold text-sm">
+                                    ⬇ Download
+                                </a>
+                            </div>
+                        </div>
+                        <div class="mt-3 w-full bg-gray-200 rounded-full h-2">
+                            <div class="bg-primary-500 h-2 rounded-full" style="width: 100%"></div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-1">100% watched ✓</p>
+                    </div>
+                </div>
+                
+                <p class="text-gray-600 text-center py-4">Showing 2 of 5 available recordings</p>
+            </div>
+            
+            
+            <div x-show="activeTab === 'cpd'" class="space-y-4">
+                
+                <div class="bg-white rounded-lg shadow p-6">
+                    <div class="mb-6">
+                        <h3 class="text-xl font-bold text-gray-900 mb-2">CPD Points Summary</h3>
+                        <div class="flex items-baseline gap-3">
+                            <p class="text-5xl font-bold text-primary-600">28</p>
+                            <p class="text-gray-600">total points earned in 2026</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-6">
+                        <p class="text-sm text-blue-900">
+                            <strong>Note:</strong> CPD points are awarded when you mark attendance for each webinar. 
+                            Your certificates are available to download after completion.
+                        </p>
+                    </div>
+                    
+                    @* CPD Points Breakdown Table *@
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left text-sm">
+                            <thead class="bg-gray-100 border-b-2 border-gray-300">
+                                <tr>
+                                    <th class="px-4 py-2 font-semibold text-gray-900">Webinar Title</th>
+                                    <th class="px-4 py-2 font-semibold text-gray-900">Date Attended</th>
+                                    <th class="px-4 py-2 font-semibold text-gray-900 text-right">CPD Points</th>
+                                    <th class="px-4 py-2 font-semibold text-gray-900">Certificate</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="px-4 py-3">AAC Basics</td>
+                                    <td class="px-4 py-3">June 28, 2026</td>
+                                    <td class="px-4 py-3 text-right font-bold">8</td>
+                                    <td class="px-4 py-3"><a href="#" class="text-primary-600 hover:underline">Download</a></td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="px-4 py-3">Hearing Loss & Accommodations</td>
+                                    <td class="px-4 py-3">June 14, 2026</td>
+                                    <td class="px-4 py-3 text-right font-bold">5</td>
+                                    <td class="px-4 py-3"><a href="#" class="text-primary-600 hover:underline">Download</a></td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="px-4 py-3">Speech Delay Support</td>
+                                    <td class="px-4 py-3">May 30, 2026</td>
+                                    <td class="px-4 py-3 text-right font-bold">5</td>
+                                    <td class="px-4 py-3"><a href="#" class="text-primary-600 hover:underline">Download</a></td>
+                                </tr>
+                                <tr class="border-b border-gray-200 hover:bg-gray-50">
+                                    <td class="px-4 py-3">Trauma-Informed Teaching</td>
+                                    <td class="px-4 py-3">May 16, 2026</td>
+                                    <td class="px-4 py-3 text-right font-bold">5</td>
+                                    <td class="px-4 py-3"><a href="#" class="text-primary-600 hover:underline">Download</a></td>
+                                </tr>
+                                <tr class="hover:bg-gray-50">
+                                    <td class="px-4 py-3">Inclusive Education Principles</td>
+                                    <td class="px-4 py-3">May 2, 2026</td>
+                                    <td class="px-4 py-3 text-right font-bold">5</td>
+                                    <td class="px-4 py-3"><a href="#" class="text-primary-600 hover:underline">Download</a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <button class="px-6 py-3 bg-primary-500 text-white rounded-lg hover:bg-primary-600 font-semibold">
+                            📥 Download All Certificates
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

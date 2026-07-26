@@ -1,0 +1,76 @@
+@{
+    ViewBag.Title = "Mark Attendance";
+}
+
+<section class="bg-white border-b border-gray-200 py-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-900">Mark Attendance</h1>
+        <p class="text-gray-700">Record who attended each webinar</p>
+    </div>
+</section>
+
+<section class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-4xl">
+        
+        <!-- Webinar Selector -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <label class="block text-sm font-semibold text-gray-900 mb-2">Select Webinar</label>
+            <select class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+                <option>Choose a webinar...</option>
+                <option selected>Autism Spectrum Awareness (July 15, 2026)</option>
+                <option>Dyslexia: Identification & Intervention (July 22, 2026)</option>
+            </select>
+        </div>
+        
+        <!-- Attendance Table -->
+        <form method="post" action="/admin/attendance/save" class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200 flex items-center justify-between">
+                <h2 class="text-lg font-bold text-gray-900">Registered Users</h2>
+                <button type="button" class="text-sm text-primary-600 hover:text-primary-700 font-semibold">
+                    Select All
+                </button>
+            </div>
+            
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-100 border-b">
+                        <tr>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">
+                                <input type="checkbox" class="w-4 h-4">
+                            </th>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Name</th>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Email</th>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Booking Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-3"><input type="checkbox" name="attended" value="1" class="w-4 h-4"></td>
+                            <td class="px-6 py-3 font-semibold text-gray-900">Sarah Johnson</td>
+                            <td class="px-6 py-3 text-gray-700">sarah@example.com</td>
+                            <td class="px-6 py-3 text-gray-700">July 10</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-3"><input type="checkbox" name="attended" value="2" class="w-4 h-4"></td>
+                            <td class="px-6 py-3 font-semibold text-gray-900">Michael Chen</td>
+                            <td class="px-6 py-3 text-gray-700">michael@example.com</td>
+                            <td class="px-6 py-3 text-gray-700">July 11</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-3"><input type="checkbox" name="attended" value="3" class="w-4 h-4" checked></td>
+                            <td class="px-6 py-3 font-semibold text-gray-900">Emma Williams</td>
+                            <td class="px-6 py-3 text-gray-700">emma@example.com</td>
+                            <td class="px-6 py-3 text-gray-700">July 12</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+            <div class="px-6 py-4 bg-gray-50 border-t border-gray-200">
+                <button type="submit" class="px-6 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-bold">
+                    Save Attendance
+                </button>
+            </div>
+        </form>
+    </div>
+</section>
