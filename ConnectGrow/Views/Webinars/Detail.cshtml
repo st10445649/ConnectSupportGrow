@@ -1,0 +1,327 @@
+
+@{
+    ViewBag.Title = "Autism Spectrum Awareness - Webinar Details";
+}
+
+<div class="max-w-7xl mx-auto px-4 py-8">
+    
+<div class="bg-gray-50 border-b border-gray-200 py-3 px-4">
+    <div class="container mx-auto text-sm text-gray-600">
+        <a href="/" class="hover:text-primary-600">Home</a> / 
+        <a href="/webinars" class="hover:text-primary-600">Webinars</a> / 
+        <span class="text-gray-900">Autism Spectrum Awareness in the Classroom</span>
+    </div>
+</div>
+
+<section class="bg-gradient-primary py-12 md:py-16">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            
+            <div class="md:col-span-2">
+                <div class="bg-white rounded-lg p-8 text-center mb-4">
+                    <img src="~/images/webinars/dyslexia.jpg" 
+                         alt="Autism Spectrum Awareness Banner" 
+                        class="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" />
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+                <h2 class="text-2xl font-bold text-gray-900 mb-4">Description</h2>
+                <p class="text-gray-700 leading-relaxed mb-4">Learn how to recognize autism characteristics, create sensory-friendly environments, implement communication strategies, and foster
+peer acceptance. Walk away with immediately applicable classroom strategies backed by current research.</p>
+                
+                <h3 class="text-xl font-bold text-gray-900 mb-3 mt-6">Learning Outcomes</h3>
+                <ul class="list-disc list-inside space-y-2 text-gray-700">
+                    <li>Understand autism spectrum</li>
+                    <li>Implement inclusive strategies</li>
+                    <li>Support neurodivergent learners</li>
+                </ul>
+            </div>
+        </div>
+            
+            @* Right: Quick Info Card (Sticky on Desktop) *@
+            <div class="md:col-span-1">
+            <div class="bg-white rounded-lg shadow-lg p-6 h-fit">
+                <div class="inline-block px-3 py-1 bg-primary-100 text-white rounded-full text-xs font-bold mb-4 w-fit">
+                    FOR EDUCATORS
+                </div>
+                
+                <h1 class="text-2xl font-bold text-gray-900 mb-4">
+                    Autism Spectrum Awareness in the Classroom
+                </h1>
+                
+                <div class="space-y-3 border-t border-gray-200 pt-4 mb-6">
+                    <div class="flex items-start gap-3">
+                        <img src="~/images/calendaricon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p class="text-xs text-gray-600">Date & Time</p>
+                            <p class="font-semibold text-gray-900">July 15, 2026</p>
+                            <p class="text-sm text-gray-700">2:00 PM - 3:30 PM SAST</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                         <img src="~/images/timeicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p class="text-xs text-gray-600">Duration</p>
+                            <p class="font-semibold text-gray-900">90 minutes</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                         <img src="~/images/coinicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p class="text-xs text-gray-600">Price</p>
+                            <p class="font-bold text-2xl text-primary-600">R150</p>
+                            <p class="text-xs text-gray-600">One-time payment</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                         <img src="~/images/bookicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p class="text-xs text-gray-600">CPD Points</p>
+                            <p class="font-semibold text-gray-900">5 Points</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-start gap-3">
+                         <img src="~/images/personicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                        <div>
+                            <p class="text-xs text-gray-600">Availability</p>
+                            <p class="font-semibold text-gray-900">12 / 30 Spots</p>
+                            <div class="w-full bg-gray-200 rounded-full h-2 mt-1">
+                                <div class="bg-primary-500 h-2 rounded-full" style="width: 40%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                @* CTA Button *@
+                <a href="/bookings/confirmation" class="w-full py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-smooth font-bold text-center block mb-3">
+                    Book Now
+                </a>
+                
+                @* Add to Calendar *@
+                <button class="w-full py-2 border-2 border-primary-500 text-primary-600 rounded-lg hover:bg-primary-50 transition-smooth font-semibold">
+                    + Add to Calendar
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="py-12 md:py-16">
+    <div class="container mx-auto px-4">
+        
+        <div x-data="{ activeTab: 'overview' }" class="max-w-4xl">
+            
+            @* Tab Navigation *@
+            <div class="flex gap-4 border-b border-gray-200 mb-8 overflow-x-auto">
+                <button x-on:click="activeTab = 'overview'" 
+                    :class="activeTab === 'overview' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-600'"
+                    class="px-4 py-3 border-b-2 font-semibold transition-smooth whitespace-nowrap">
+                    Overview
+                </button>
+                <button x-on:click="activeTab = 'details'" 
+                    :class="activeTab === 'details' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-600'"
+                    class="px-4 py-3 border-b-2 font-semibold transition-smooth whitespace-nowrap">
+                    What You'll Learn
+                </button>
+                <button x-on:click="activeTab = 'speaker'" 
+                    :class="activeTab === 'speaker' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-600'"
+                    class="px-4 py-3 border-b-2 font-semibold transition-smooth whitespace-nowrap">
+                    Speaker
+                </button>
+                <button x-on:click="activeTab = 'faq'" 
+                    :class="activeTab === 'faq' ? 'border-primary-500 text-primary-600' : 'border-transparent text-gray-600'"
+                    class="px-4 py-3 border-b-2 font-semibold transition-smooth whitespace-nowrap">
+                    FAQ
+                </button>
+            </div>
+            
+            
+            <div x-show="activeTab === 'overview'" class="space-y-6">
+                <div>
+                    <h2 class="text-3xl font-bold text-gray-900 mb-4">About This Webinar</h2>
+                    <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+                        Autism Spectrum Disorder (ASD) affects how students process information, interact socially, and engage with their learning environment. 
+                        This comprehensive webinar is designed to equip educators with the knowledge and practical strategies needed to support autistic learners 
+                        in inclusive classroom settings.
+                    </p>
+                    <p class="text-lg text-gray-700 mb-4 leading-relaxed">
+                        Learn how to recognize autism characteristics, create sensory-friendly environments, implement communication strategies, and foster 
+                        peer acceptance. Walk away with immediately applicable classroom strategies backed by current research.
+                    </p>
+                </div>
+                
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                    <h3 class="font-bold text-blue-900 mb-2">Webinar Delivery</h3>
+                    <p class="text-blue-900 mb-2">
+                        <strong>Format:</strong> Live Microsoft Teams Meeting with Q&A
+                    </p>
+                    <p class="text-blue-900 mb-2">
+                        <strong>Recording:</strong> Available for 30 days after the event
+                    </p>
+                    <p class="text-blue-900">
+                        <strong>Materials:</strong> Downloadable slides and resource list provided
+                    </p>
+                </div>
+            </div>
+            
+            
+            <div x-show="activeTab === 'details'" class="space-y-6">
+                <h2 class="text-3xl font-bold text-gray-900">Learning Outcomes</h2>
+                
+                <div class="space-y-4">
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">
+                            ✓
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Understand Autism Spectrum Disorder</h3>
+                            <p class="text-gray-700">Characteristics, prevalence, and neurodiversity perspective on autism</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">
+                            ✓
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Create Sensory-Friendly Environments</h3>
+                            <p class="text-gray-700">Practical classroom modifications to reduce sensory overload and anxiety</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">
+                            ✓
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Implement Communication Strategies</h3>
+                            <p class="text-gray-700">Support social interaction and reduce communication barriers</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">
+                            ✓
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Foster Inclusive Peer Relationships</h3>
+                            <p class="text-gray-700">Promote understanding and acceptance among classmates</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4">
+                        <div class="flex-shrink-0 w-8 h-8 bg-primary-100 text-primary-600 rounded-full flex items-center justify-center font-bold">
+                            ✓
+                        </div>
+                        <div>
+                            <h3 class="font-bold text-gray-900 mb-1">Manage Challenging Behaviors</h3>
+                            <p class="text-gray-700">Evidence-based techniques for addressing behavioral challenges compassionately</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="activeTab === 'speaker'" class="space-y-6">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Meet Your Presenter</h2>
+                
+                <div class="flex gap-6 flex-col md:flex-row">
+                    <div class="w-24 h-24 md:w-32 md:h-32 bg-primary-200 rounded-lg flex-shrink-0 flex items-center">
+                        <img src="~/images/presentericon.png" alt="Presenter" class="w-full h-full object-cover" />
+                        
+                    </div>
+                    
+                    <div class="flex-grow">
+                        <h3 class="text-2xl font-bold text-gray-900 mb-2">Dr. Deborah Hardcastle</h3>
+                        <p class="text-primary-600 font-semibold mb-4">Special Education Specialist & Autism Advocate</p>
+                        
+                        <p class="text-gray-700 mb-4 leading-relaxed">
+                            Dr. Sarah Mitchell is an occupational therapist and autism specialist with over 15 years of experience supporting 
+                            neurodivergent individuals in educational and clinical settings. 
+                        
+                        <div class="space-y-2 text-sm text-gray-700">
+                            <p><strong>Education:</strong> PhD Special Education, Master's in Clinical Psychology</p>
+                            <p><strong>Certifications:</strong> Autism Spectrum Disorder Specialist, TEACCH Program Certified</p>
+                            <p><strong>Experience:</strong> 15+ years in school psychology, diagnostic assessment, and intervention design</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div x-show="activeTab === 'faq'" class="space-y-4">
+                <h2 class="text-3xl font-bold text-gray-900 mb-6">Frequently Asked Questions</h2>
+                
+                <div x-data="{ open: false }" class="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-smooth">
+                    <button x-on:click="open = !open" class="w-full text-left flex items-center justify-between font-semibold text-gray-900 hover:text-primary-600">
+                        <span>How do I join the webinar?</span>
+                        <span x-text="open ? '▼' : '▶'"></span>
+                    </button>
+                    <p x-show="open" class="mt-3 text-gray-700">
+                        After booking, you'll receive a Zoom link via email 24 hours before the webinar. Simply click the link at the scheduled time 
+                        to join. You don't need to download anything—joining through your browser works perfectly.
+                    </p>
+                </div>
+                
+                <div x-data="{ open: false }" class="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-smooth">
+                    <button x-on:click="open = !open" class="w-full text-left flex items-center justify-between font-semibold text-gray-900 hover:text-primary-600">
+                        <span>What if I can't attend live? Is there a recording?</span>
+                        <span x-text="open ? '▼' : '▶'"></span>
+                    </button>
+                    <p x-show="open" class="mt-3 text-gray-700">
+                        Yes! All webinars are recorded and made available to registered attendees for 30 days. You'll receive a link to the 
+                        recording via email within 24 hours of the session.
+                    </p>
+                </div>
+                
+                <div x-data="{ open: false }" class="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-smooth">
+                    <button x-on:click="open = !open" class="w-full text-left flex items-center justify-between font-semibold text-gray-900 hover:text-primary-600">
+                        <span>Are slides and materials provided?</span>
+                        <span x-text="open ? '▼' : '▶'"></span>
+                    </button>
+                    <p x-show="open" class="mt-3 text-gray-700">
+                        Absolutely! Presenter slides, a resource list, classroom checklists, and additional reading materials are provided as 
+                        downloadable PDFs after the webinar.
+                    </p>
+                </div>
+                
+                <div x-data="{ open: false }" class="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-smooth">
+                    <button x-on:click="open = !open" class="w-full text-left flex items-center justify-between font-semibold text-gray-900 hover:text-primary-600">
+                        <span>How do I claim CPD points?</span>
+                        <span x-text="open ? '▼' : '▶'"></span>
+                    </button>
+                    <p x-show="open" class="mt-3 text-gray-700">
+                        CPD points are awarded automatically after you complete the webinar. You can download your CPD certificate directly from 
+                        your dashboard after the event.
+                    </p>
+                </div>
+                
+                <div x-data="{ open: false }" class="border border-gray-200 rounded-lg p-4 hover:border-primary-300 transition-smooth">
+                    <button x-on:click="open = !open" class="w-full text-left flex items-center justify-between font-semibold text-gray-900 hover:text-primary-600">
+                        <span>What's your refund policy?</span>
+                        <span x-text="open ? '▼' : '▶'"></span>
+                    </button>
+                    <p x-show="open" class="mt-3 text-gray-700">
+                        We offer a 7-day refund guarantee. If you're not satisfied with the webinar, request a refund within 7 days of purchase 
+                        for a full refund. No questions asked.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="gradient-primary py-12 md:py-16 border-t border-gray-200">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-3xl font-bold text-gray-900 mb-4">Ready to Book?</h2>
+        <p class="text-lg text-gray-700 mb-8 max-w-2xl mx-auto">
+            Limited spots available. Secure your place in this essential professional development webinar.
+        </p>
+        <a href="/bookings/confirmation" class="inline-block px-8 py-4 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-smooth font-bold text-lg">
+            Book Now for R150
+        </a>
+    </div>
+</section>

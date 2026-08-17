@@ -1,0 +1,100 @@
+
+
+<aside class="bg-gradient-to-b from-white to-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
+    
+    <h3 class="font-bold text-lg md:text-xl text-gray-900 mb-6 flex items-center">
+        <span class="text-2xl mr-3"></span>
+        Admin Dashboard
+    </h3>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        
+        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-purple-50 hover:to-purple-100 border border-gray-200 hover:border-purple-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/dashboard.png" 
+                     alt="Dashboard" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Dashboard</h4>
+                <p class="text-xs text-gray-600 mt-1">View analytics</p>
+            </div>
+        </a>
+        
+        <a asp-area="Admin" asp-controller="Webinars" asp-action="Index" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 border border-gray-200 hover:border-blue-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/analytics.png" 
+                     alt="Webinars" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Webinars</h4>
+                <p class="text-xs text-gray-600 mt-1">Manage sessions</p>
+            </div>
+        </a>
+        
+        <a asp-area="Admin" asp-controller="Recordings" asp-action="Index" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-red-50 hover:to-red-100 border border-gray-200 hover:border-red-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/recording.png" 
+                     alt="Recordings" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Recordings</h4>
+                <p class="text-xs text-gray-600 mt-1">Grant access</p>
+            </div>
+        </a>
+        
+        <a asp-area="Admin" asp-controller="Analytics" asp-action="Index" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 border border-gray-200 hover:border-green-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/analytics.png" 
+                     alt="Analytics" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Analytics</h4>
+                <p class="text-xs text-gray-600 mt-1">View metrics</p>
+            </div>
+        </a>
+        
+        <a asp-area="Admin" asp-controller="Attendance" asp-action="Index" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-yellow-50 hover:to-yellow-100 border border-gray-200 hover:border-yellow-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/personicon.png" 
+                     alt="Attendance" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Attendance</h4>
+                <p class="text-xs text-gray-600 mt-1">Track participants</p>
+            </div>
+        </a>
+        
+        <a asp-area="Admin" asp-controller="Email" asp-action="BulkRecording" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-indigo-50 hover:to-indigo-100 border border-gray-200 hover:border-indigo-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/email.png" 
+                     alt="Email" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Email</h4>
+                <p class="text-xs text-gray-600 mt-1">Send messages</p>
+            </div>
+        </a>
+        
+        <a asp-area="Admin" asp-controller="Blog" asp-action="Index" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-pink-50 hover:to-pink-100 border border-gray-200 hover:border-pink-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/blog.png" 
+                     alt="Blog" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Blog</h4>
+                <p class="text-xs text-gray-600 mt-1">Manage content</p>
+            </div>
+        </a>
+        
+        <a asp-area="Admin" asp-controller="Faq" asp-action="Index" 
+           class="group bg-white hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 border border-gray-200 hover:border-orange-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
+            <div class="flex flex-col items-center text-center">
+                <img src="~/images/faq.png" 
+                     alt="FAQ" 
+                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
+                <h4 class="font-semibold text-gray-900 text-sm md:text-base">FAQ</h4>
+                <p class="text-xs text-gray-600 mt-1">Update FAQs</p>
+            </div>
+        </a>
+    </div>
+</aside>

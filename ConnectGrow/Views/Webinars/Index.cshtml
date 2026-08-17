@@ -1,0 +1,351 @@
+
+@{
+    ViewBag.Title = "Webinars";
+}
+
+<section class="gradient-primary py-12 md:py-16">
+    <div class="container mx-auto px-4">
+        <h1 class="text-4xl md:text-5xl font-bold text-gray-900 mb-4">Upcoming Webinars</h1>
+        <p class="text-lg text-gray-700">Discover expert-led training sessions designed for your professional growth</p>
+    </div>
+</section>
+
+<section class="bg-white border-b border-gray-200 py-6 sticky top-20 z-40">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4" x-data="{ filtered: false }">
+            
+            @* Search Box *@
+            <div class="md:col-span-2">
+                <input type="text" placeholder="Search webinars..." 
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"
+                    input="filtered = $el.value !== ''">
+            </div>
+            
+            @* Category Filter *@
+            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+                <option value="">All Categories</option>
+                <option value="educators">For Educators</option>
+                <option value="parents">For Parents</option>
+                <option value="children">For Children</option>
+                <option value="general">General</option>
+            </select>
+            
+            <select class="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+                <option value="upcoming">Upcoming First</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="cpd">CPD Points: High to Low</option>
+            </select>
+        </div>
+    </div>
+</section>
+
+<section class="py-12 md:py-16">
+    <div class="container mx-auto px-4">
+        
+        @* Grid Layout *@
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            
+            @* WEBINAR CARD 1 *@
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-smooth overflow-hidden border border-gray-100 flex flex-col">
+                
+                @* Image/Header *@  
+                
+                <div class="h-48 bg-gradient-primary flex items-center justify-center text-6xl">
+                     <img src="~/images/webinars/adhd.png" 
+                             alt="speech delays" 
+                             class="w-full h-40 sm:h-48 md:h-56 object-cover" />
+                             
+                </div>
+
+                
+                @* Content *@
+                <div class="p-6 flex flex-col flex-grow">
+                    
+                    @* Category Badge *@
+                    <div class="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-semibold mb-3 w-fit">
+                        For Educators
+                    </div>
+                    
+                    @* Title *@
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                        Autism Spectrum Awareness in the Classroom
+                    </h3>
+                    
+                    @* Description *@
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">
+                        Understand autism characteristics and learn practical classroom strategies to support neurodivergent learners.
+                    </p>
+                    
+                    @* Details *@
+                    <div class="space-y-2 text-sm text-gray-700 border-t border-gray-200 pt-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/calendaricon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>July 15, 2026 at 2:00 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/timeicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>90 minutes</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/coinicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">R150 ZAR</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/bookicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">5 CPD Points</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/personicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>12 / 30 spots available</span>
+                        </div>
+                    </div>
+                    
+                    <a href="/webinars/detail" class="w-full py-2 bg-primary-500 text-white rounded hover:bg-primary-600 transition-smooth font-semibold text-center block">
+                        View Details
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-smooth overflow-hidden border border-gray-100 flex flex-col">
+                <div class="h-48 bg-gradient-primary flex items-center justify-center text-6xl">
+                     <img src="~/images/webinars/webinarautism.jpg" 
+                             alt="speech delays" 
+                             class="w-full h-40 sm:h-48 md:h-56 object-cover" />
+                             
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="inline-block px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-xs font-semibold mb-3 w-fit">
+                        For Educators
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                        Dyslexia: Identification & Intervention Strategies
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">
+                        Comprehensive guide to identifying dyslexia and implementing evidence-based interventions in your classroom.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-700 border-t border-gray-200 pt-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/calendaricon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>July 22, 2026 at 3:30 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/timeicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>120 minutes</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/coinicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">R200 ZAR</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/bookicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">8 CPD Points</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/personicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>25 / 30 spots available</span>
+                        </div>
+                    </div>
+                    <a href="/webinars/detail" class="w-full py-2 bg-secondary-500 text-white rounded hover:bg-secondary-600 transition-smooth font-semibold text-center block">
+                        View Details
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow overflow-hidden border border-gray-100 flex flex-col opacity-75">
+                <div class="h-48 bg-gradient-primary flex items-center justify-center text-6xl">
+                     <img src="~/images/webinars/speechdelays.png" 
+                             alt="speech delays" 
+                             class="w-full h-40 sm:h-48 md:h-56 object-cover" />
+                             
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="inline-block px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-xs font-semibold mb-3 w-fit">
+                        For Parents
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                        Supporting Speech Delay: A Parent's Guide
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">
+                        Learn practical techniques to support your child's speech and language development at home.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-700 border-t border-gray-200 pt-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/calendaricon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>July 29, 2026 at 1:00 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/timeicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>60 minutes</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/coinicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">R100 ZAR</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/bookicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">3 CPD Points</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                           <img src="~/images/personicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="text-red-600 font-bold">0 / 20 spots available</span>
+                        </div>
+                    </div>
+                    <button disabled class="w-full py-2 bg-gray-400 text-white rounded font-semibold text-center cursor-not-allowed">
+                        Sold Out
+                    </button>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-smooth overflow-hidden border border-gray-100 flex flex-col">
+                <div class="h-48 bg-gradient-primary flex items-center justify-center text-6xl">
+                     <img src="~/images/webinars/speechdelays2.jpg" 
+                             alt="speech delays" 
+                             class="w-full h-40 sm:h-48 md:h-56 object-cover" />
+                             
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="inline-block px-3 py-1 bg-accent-100 text-accent-700 rounded-full text-xs font-semibold mb-3 w-fit">
+                        General
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                        Trauma-Informed Approaches in Education
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">
+                        Understanding trauma's impact on learning and creating a safe, supportive classroom environment.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-700 border-t border-gray-200 pt-4 mb-4">
+                        <div class="flex items-center gap-2">
+                             <img src="~/images/calendaricon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>August 5, 2026 at 2:00 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/timeicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>90 minutes</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/coinicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">R150 ZAR</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/bookicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">5 CPD Points</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/personicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>30 / 40 spots available</span>
+                        </div>
+                    </div>
+                    <a href="/webinars/detail" class="w-full py-2 bg-primary-500 text-white rounded hover:bg-primary-600 transition-smooth font-semibold text-center block">
+                        View Details
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-smooth overflow-hidden border border-gray-100 flex flex-col">
+                <div class="h-48 bg-gradient-primary flex items-center justify-center text-6xl">
+                     <img src="~/images/webinars/autism2.jpeg" 
+                             alt="speech delays" 
+                             class="w-full h-40 sm:h-48 md:h-56 object-cover" />
+                             
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="inline-block px-3 py-1 bg-secondary-100 text-secondary-700 rounded-full text-xs font-semibold mb-3 w-fit">
+                        🗣️ Specialised
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                        AAC (Augmentative & Alternative Communication) Basics
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">
+                        Introduction to AAC systems and how to implement them effectively in school and clinical settings.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-700 border-t border-gray-200 pt-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/calendaricon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>August 12, 2026 at 4:00 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/timeicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>120 minutes</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/coinicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">R250 ZAR</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/bookicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">8 CPD Points</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/personicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>18 / 25 spots available</span>
+                        </div>
+                    </div>
+                    <a href="/webinars/5" class="w-full py-2 bg-secondary-500 text-white rounded hover:bg-secondary-600 transition-smooth font-semibold text-center block">
+                        View Details
+                    </a>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow hover:shadow-lg transition-smooth overflow-hidden border border-gray-100 flex flex-col">
+                <div class="h-48 bg-gradient-primary flex items-center justify-center text-6xl">
+                     <img src="~/images/webinars/dyslexia.jpg" 
+                             alt="speech delays" 
+                             class="w-full h-40 sm:h-48 md:h-56 object-cover" />
+                             
+                </div>
+                <div class="p-6 flex flex-col flex-grow">
+                    <div class="inline-block px-3 py-1 bg-primary-100 text-primary-700 rounded-full text-xs font-semibold mb-3 w-fit">
+                        For Educators
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-2 line-clamp-2">
+                        Hearing Loss & Classroom Accommodations
+                    </h3>
+                    <p class="text-sm text-gray-600 mb-4 flex-grow">
+                        Understanding hearing loss and creating an accessible classroom environment for deaf and hard of hearing students.
+                    </p>
+                    <div class="space-y-2 text-sm text-gray-700 border-t border-gray-200 pt-4 mb-4">
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/calendaricon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>August 19, 2026 at 3:00 PM</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/timeicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>90 minutes</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/coinicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">R150 ZAR</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/bookicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span class="font-semibold">5 CPD Points</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <img src="~/images/personicon.png" alt="Price" class="w-6 h-6 flex-shrink-0 mt-0.5" />
+                            <span>20 / 35 spots available</span>
+                        </div>
+                    </div>
+                    <a href="/webinars/detail" class="w-full py-2 bg-primary-500 text-white rounded hover:bg-primary-600 transition-smooth font-semibold text-center block">
+                        View Details
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="flex justify-center gap-2 py-8">
+            <button class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100 disabled:opacity-50" disabled>← Previous</button>
+            <button class="px-4 py-2 bg-primary-500 text-white rounded font-semibold">1</button>
+            <button class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">2</button>
+            <button class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">3</button>
+            <button class="px-4 py-2 border border-gray-300 rounded hover:bg-gray-100">Next →</button>
+        </div>
+    </div>
+</section>
+
+<section class="gradient-primary py-12 md:py-16">
+    <div class="container mx-auto px-4 text-center">
+        <h2 class="text-2xl md:text-3xl font-bold text-gray-900 mb-4">Didn't find what you're looking for?</h2>
+        <p class="text-gray-700 mb-6">Check back soon for new webinars, or <a href="#" class="text-primary-600 font-bold hover:underline">subscribe to updates</a>.</p>
+    </div>
+</section>

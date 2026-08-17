@@ -1,0 +1,90 @@
+@{
+    ViewBag.Title = "Manage FAQ";
+}
+
+<section class="bg-white border-b border-gray-200 py-8">
+    <div class="container mx-auto px-4 flex items-center justify-between">
+        <div>
+            <h1 class="text-3xl font-bold text-gray-900">Manage FAQ</h1>
+            <p class="text-gray-700">Create and organize frequently asked questions</p>
+        </div>
+        <a href="/admin/faq/create" class="px-6 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-bold">
+            + New Question
+        </a>
+    </div>
+</section>
+
+<section class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4 max-w-4xl">
+        
+        <!-- Categories -->
+        <div class="bg-white rounded-lg shadow mb-6">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="font-bold text-gray-900">Categories</h2>
+            </div>
+            <div class="p-6 space-y-2">
+                <button class="w-full text-left px-4 py-2 bg-primary-100 text-primary-700 rounded font-semibold hover:bg-primary-200">
+                    All (8 questions)
+                </button>
+                <button class="w-full text-left px-4 py-2 text-gray-900 rounded hover:bg-gray-100">
+                    Getting Started (3)
+                </button>
+                <button class="w-full text-left px-4 py-2 text-gray-900 rounded hover:bg-gray-100">
+                    Payments & Refunds (2)
+                </button>
+                <button class="w-full text-left px-4 py-2 text-gray-900 rounded hover:bg-gray-100">
+                    CPD & Certificates (2)
+                </button>
+                <button class="w-full text-left px-4 py-2 text-gray-900 rounded hover:bg-gray-100">
+                    Technical Support (1)
+                </button>
+            </div>
+        </div>
+        
+        <!-- FAQ Items -->
+        <div class="space-y-4">
+            
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary-500">
+                <div class="flex items-start justify-between">
+                    <div class="flex-grow">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">How do I enroll in a webinar?</h3>
+                        <p class="text-gray-700 text-sm mb-3">Browse the webinar catalogue, click "Book Now", complete payment, and you'll receive a Zoom link via email.</p>
+                        <p class="text-xs text-gray-600">Category: <span class="font-semibold">Getting Started</span></p>
+                    </div>
+                    <div class="flex gap-2 ml-4 flex-shrink-0">
+                        <a href="#" class="text-primary-600 hover:text-primary-700 font-semibold">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-700 font-semibold">Delete</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-secondary-500">
+                <div class="flex items-start justify-between">
+                    <div class="flex-grow">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">What's your refund policy?</h3>
+                        <p class="text-gray-700 text-sm mb-3">We offer a 7-day refund guarantee. Request a refund within 7 days of purchase for a full refund, no questions asked.</p>
+                        <p class="text-xs text-gray-600">Category: <span class="font-semibold">Payments & Refunds</span></p>
+                    </div>
+                    <div class="flex gap-2 ml-4 flex-shrink-0">
+                        <a href="#" class="text-primary-600 hover:text-primary-700 font-semibold">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-700 font-semibold">Delete</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-accent-500">
+                <div class="flex items-start justify-between">
+                    <div class="flex-grow">
+                        <h3 class="text-lg font-bold text-gray-900 mb-2">Can I watch a recording if I miss the live session?</h3>
+                        <p class="text-gray-700 text-sm mb-3">Yes! All webinars are recorded and available to registrants for 30 days. You'll receive a link to the recording via email.</p>
+                        <p class="text-xs text-gray-600">Category: <span class="font-semibold">CPD & Certificates</span></p>
+                    </div>
+                    <div class="flex gap-2 ml-4 flex-shrink-0">
+                        <a href="#" class="text-primary-600 hover:text-primary-700 font-semibold">Edit</a>
+                        <a href="#" class="text-red-600 hover:text-red-700 font-semibold">Delete</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

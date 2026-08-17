@@ -1,0 +1,270 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Connect Support Grow</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        pastel: {
+
+                            
+                            50: '#f9f5f0',
+                            100: '#f5ebe0',
+                            200: '#f0e4d0',
+                            300: '#e8d5b7',
+                            400: '#dcc8a1',
+                            500: '#cdb88a',
+                            600: '#b59f73',
+                            700: '#8b7355',
+                            800: '#6b5744',
+                            900: '#4a3c32'
+                        },
+                        primary: {
+                            50: '#85509d', 
+                            100: '#9258ad', 
+                            200: '#a161be', 
+                            300: '#b16bd1', 
+                            400: '#bb7ed7', 
+                            500: '#c590dd', 
+                            600: '#cfa3e3', 
+                            700: '#d8b5e8', 
+                            800: '#e2c8ee', 
+                            900: '#ecdaf4'
+                        },
+                        secondary: {
+
+                            50:'#5191be', 
+                            100: '#59a0d1', 
+                            200: '#62b0e6', 
+                            300: '#67b9f2', 
+                            400: '#6cc2fd', 
+                            500: '#8ecffb', 
+                            600: '#9fd5fa', 
+                        },
+                        accent: {
+                            50: '#fdf2f8',
+                            100: '#fce7f3',
+                            200: '#fbcfe8',
+                            300: '#f8b4d4',
+                            400: '#f472b6',
+                            500: '#ec4899',
+                            600: '#db2777'
+                        }
+
+                        
+                    }
+
+                    
+                }
+            }
+        }
+    </script>
+    
+    @* Alpine.js for interactivity *@
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    @* Font: Montserrat (modern, friendly) *@
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <style>
+        
+        * { font-family: 'Montserrat', sans-serif; }
+        body { background-color: #fafaf8; }
+        
+        /* Smooth transitions */
+        .transition-smooth { transition: all 0.3s ease; }
+        
+        /* Gradient backgrounds */
+        .gradient-primary {
+            background: linear-gradient(135deg, #dcfce7 0%, #e0f2fe 100%);
+        }
+        
+        .gradient-accent {
+            background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
+        }
+
+        /* Gradient backgrounds */
+        .gradient-header {
+            background: linear-gradient(135deg, #8fe9f3 0%, #f38fe0 100%);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    
+<header x-data="{ mobileOpen: false }" class="bg-white shadow-sm sticky top-0 z-50">
+    
+        <nav class="container mx-auto px-4 py-4 flex items-center justify-between">
+
+
+            @* Logo & Brand *@
+            <div class="flex items-center">
+                <a href="/" class="flex items-center gap-2 text-xl md:text-2xl font-bold text-primary-600 hover:opacity-90 transition-smooth">
+                    <img src="~/images/logo.png" 
+                        alt="Connect Grow Support Logo" 
+                        class="w-8 h-8 md:w-9 md:h-9 object-contain flex-shrink-0" />
+                    <span>Connect Support Grow</span>
+                </a>
+            </div>
+            
+            @* Desktop Navigation Menu *@
+            <div class="hidden md:flex items-center gap-6">
+                <a href="/" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">Home</a>
+                <a href="/webinars" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">Webinars</a>
+                <a href="/home/about" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">About</a>
+                <a href="/home/faq" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">FAQ</a>
+                <a href="/home/blog" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">Blog</a>
+            </div>
+            
+            @* Auth & User Menu *@
+            <div class="hidden md:flex items-center gap-4">
+                @if (User.Identity?.IsAuthenticated ?? false)
+                {
+                    <div x-data="{ open: false }" class="relative">
+                        <button x-on:click="open = !open" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary-50 hover:bg-primary-100 transition-smooth">
+                            <span class="text-sm font-medium">@User.Identity.Name</span>
+                            <span>👤</span>
+                        </button>
+                        
+                        <div x-show="open" @@click.outside="open = false" class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg border border-gray-100 py-2 z-20">
+                            <a href="/dashboard" class="block px-4 py-2 hover:bg-primary-50 text-gray-700">Dashboard</a>
+                            <a href="/account/settings" class="block px-4 py-2 hover:bg-primary-50 text-gray-700">Settings</a>
+                            <hr class="my-2">
+                            <form method="post" action="/account/logout">
+                                <button type="submit" class="w-full text-left px-4 py-2 hover:bg-red-50 text-gray-700">Sign Out</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    
+                }
+                else
+                {
+                    <a href="/account/login" class="text-gray-700 hover:text-primary-600 font-medium">Sign In</a>
+                    <a href="/account/register" class="px-4 py-2 bg-primary-500 text-white rounded-lg hover:bg-primary-600 transition-smooth font-medium">Register</a>
+                }
+            </div>
+            <button x-on:click="mobileOpen = !mobileOpen"
+            class="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 focus:outline-none">
+            <span class="w-6 h-0.5 bg-gray-700 block transition-all duration-300 transform" 
+          :class="mobileOpen ? 'rotate-45 translate-y-2' : ''"></span>
+    <span class="w-6 h-0.5 bg-gray-700 block transition-all duration-300" 
+          :class="mobileOpen ? 'opacity-0' : 'opacity-100'"></span>
+    <span class="w-6 h-0.5 bg-gray-700 block transition-all duration-300 transform" 
+          :class="mobileOpen ? '-rotate-45 -translate-y-2' : ''"></span>
+               </button>
+            
+           
+           
+        </nav>
+
+
+        @* Mobile Menu  *@
+        <div x-show="mobileOpen" class="md:hidden bg-white border-t border-gray-200 px-4 py-4 space-y-2">
+            <a href="/" class="block py-2 text-gray-700 hover:text-primary-600">Home</a>
+            <a href="/webinars" class="block py-2 text-gray-700 hover:text-primary-600">Webinars</a>
+            <a href="/home/about" class="block py-2 text-gray-700 hover:text-primary-600">About</a>
+            <a href="/home/faq" class="block py-2 text-gray-700 hover:text-primary-600">FAQ</a>
+            <a href="/home/blog" class="block py-2 text-gray-700 hover:text-primary-600">Blog</a>
+            <hr class="my-2">
+            @if (User.Identity?.IsAuthenticated ?? false)
+            {
+                <a href="/dashboard" class="block py-2 text-gray-700 hover:text-primary-600">Dashboard</a>
+                <a href="/account/settings" class="block py-2 text-gray-700 hover:text-primary-600">Settings</a>
+                <form method="post" action="/account/logout">
+                    <button type="submit" class="w-full text-left py-2 text-red-600 hover:text-red-700">Sign Out</button>
+                </form>
+            }
+            else
+            {
+                <a href="/account/login" class="block py-2 text-gray-700 hover:text-primary-600">Sign In</a>
+                <a href="/account/register" class="block py-2 bg-primary-500 text-white rounded px-4">Register</a>
+            }
+        </div>
+    </header>
+
+    
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4">
+            <p class="font-medium">✓ @TempData["SuccessMessage"]</p>
+        </div>
+    }
+    
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <div class="bg-red-100 border-l-4 border-red-500 text-red-700 p-4">
+            <p class="font-medium">✗ @TempData["ErrorMessage"]</p>
+        </div>
+    }
+    
+    <main class="min-h-screen">
+        @RenderBody()
+    </main>
+    
+    <footer class="bg-gradient-to-r from-primary-50 to-secondary-50 border-t border-gray-200 mt-16">
+        <div class="container mx-auto px-4 py-12">
+            
+            @* Footer Content Grid *@
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                
+                @* Company Info *@
+                <div>
+                    <h3 class="font-bold text-lg mb-4 text-gray-100">Connect Grow Support</h3>
+                    <p class="text-gray-100 text-sm mb-4">
+                        Professional webinars and training for speech-language therapists and educators.
+                    </p>
+                </div>
+                
+                @* Quick Links *@
+                <div>
+                    <h4 class="font-semibold text-gray-100 mb-4">Quick Links</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-gray-100 hover:text-primary-600">Home</a></li>
+                        <li><a href="/webinars" class="text-gray-100 hover:text-primary-600">Webinars</a></li>
+                        <li><a href="/about" class="text-gray-100 hover:text-primary-600">About Us</a></li>
+                        <li><a href="/faq" class="text-gray-100 hover:text-primary-600">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                @* Resources *@
+                <div>
+                    <h4 class="font-semibold text-gray-100 mb-4">Resources</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/blog" class="text-gray-100 hover:text-primary-600">Blog</a></li>
+                        <li><a href="/dmca" class="text-gray-100 hover:text-primary-600">DMCA</a></li>
+                        <li><a href="#" class="text-gray-100 hover:text-primary-600">Privacy</a></li>
+                        <li><a href="#" class="text-gray-100 hover:text-primary-600">Terms</a></li>
+                    </ul>
+                </div>
+                
+                @* Contact *@
+                <div>
+                    <h4 class="font-semibold text-gray-100 mb-4">Contact</h4>
+                    <p class="text-gray-100 text-sm mb-2">support@connectgrowsupport.com</p>
+                    <p class="text-gray-100 text-sm mb-4">+27 (0)XX XXX XXXX</p>
+                    <div class="flex gap-3">
+                        <a href="#" class="w-8 h-8 bg-primary-200 rounded-full flex items-center justify-center hover:bg-primary-300">f</a>
+                        <a href="#" class="w-8 h-8 bg-secondary-200 rounded-full flex items-center justify-center hover:bg-secondary-300">t</a>
+                        <a href="#" class="w-8 h-8 bg-accent-200 rounded-full flex items-center justify-center hover:bg-accent-300">ig</a>
+                    </div>
+                </div>
+            </div>
+            
+            @* Bottom Bar *@
+            <div class="border-t border-gray-300 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-100">
+                    <p>© 2026 Connect Grow Support. All Rights Reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

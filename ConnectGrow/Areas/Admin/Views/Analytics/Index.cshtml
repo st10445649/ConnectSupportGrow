@@ -1,0 +1,103 @@
+@{
+    ViewBag.Title = "Analytics";
+}
+
+<section class="bg-white border-b border-gray-200 py-8">
+    <div class="container mx-auto px-4">
+        <h1 class="text-3xl font-bold text-gray-900">Analytics & Reports</h1>
+        <p class="text-gray-700">Track webinar performance and revenue</p>
+    </div>
+</section>
+
+<section class="py-8 bg-gray-50">
+    <div class="container mx-auto px-4">
+        
+        <!-- Date Range Filter -->
+        <div class="bg-white rounded-lg shadow p-6 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">From</label>
+                    <input type="date" value="2026-06-01"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold text-gray-900 mb-2">To</label>
+                    <input type="date" value="2026-07-25"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </div>
+                <div class="flex items-end">
+                    <button class="w-full py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-bold">
+                        Generate Report
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- KPI Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
+            <div class="bg-white rounded-lg shadow p-6">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Total Registrations</p>
+                <p class="text-4xl font-bold text-primary-600">187</p>
+                <p class="text-xs text-green-600 mt-2">↑ 12% vs last period</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Total Revenue</p>
+                <p class="text-4xl font-bold text-green-600">R 28,050</p>
+                <p class="text-xs text-green-600 mt-2">↑ 8% vs last period</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Avg Attendance</p>
+                <p class="text-4xl font-bold text-secondary-600">78%</p>
+                <p class="text-xs text-gray-600 mt-2">23 of 30 attendees</p>
+            </div>
+            <div class="bg-white rounded-lg shadow p-6">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Avg Rating</p>
+                <p class="text-4xl font-bold text-accent-600">4.8 / 5</p>
+                <p class="text-xs text-gray-600 mt-2">67 evaluations</p>
+            </div>
+        </div>
+        
+        <!-- Performance Table -->
+        <div class="bg-white rounded-lg shadow overflow-hidden">
+            <div class="px-6 py-4 border-b border-gray-200">
+                <h2 class="text-lg font-bold text-gray-900">Webinar Performance</h2>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-100 border-b">
+                        <tr>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Webinar</th>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Registrations</th>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Attended</th>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Revenue</th>
+                            <th class="px-6 py-3 text-left font-semibold text-gray-900">Avg Rating</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-3 font-semibold text-gray-900">Autism Spectrum Awareness</td>
+                            <td class="px-6 py-3 text-gray-700">30</td>
+                            <td class="px-6 py-3 text-gray-700">28 (93%)</td>
+                            <td class="px-6 py-3 font-bold text-gray-900">R 4,500</td>
+                            <td class="px-6 py-3">⭐ 4.9</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-3 font-semibold text-gray-900">Dyslexia: Identification</td>
+                            <td class="px-6 py-3 text-gray-700">25</td>
+                            <td class="px-6 py-3 text-gray-700">21 (84%)</td>
+                            <td class="px-6 py-3 font-bold text-gray-900">R 5,000</td>
+                            <td class="px-6 py-3">⭐ 4.7</td>
+                        </tr>
+                        <tr class="border-b hover:bg-gray-50">
+                            <td class="px-6 py-3 font-semibold text-gray-900">AAC Basics</td>
+                            <td class="px-6 py-3 text-gray-700">19</td>
+                            <td class="px-6 py-3 text-gray-700">15 (79%)</td>
+                            <td class="px-6 py-3 font-bold text-gray-900">R 4,750</td>
+                            <td class="px-6 py-3">⭐ 4.6</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
