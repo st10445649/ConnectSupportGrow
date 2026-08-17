@@ -21,5 +21,12 @@ public class DashboardController : Controller
         return View();
     }
 
+[HttpGet("dashboard/createevaluations")]
+    public IActionResult CreateEvaluations()
+    {
+        return View("~/Views/Dashboard/Evaluations/Create.cshtml");
+    }
+
+
 
 }

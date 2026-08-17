@@ -168,9 +168,9 @@
         <div x-show="mobileOpen" class="md:hidden bg-white border-t border-gray-200 px-4 py-4 space-y-2">
             <a href="/" class="block py-2 text-gray-700 hover:text-primary-600">Home</a>
             <a href="/webinars" class="block py-2 text-gray-700 hover:text-primary-600">Webinars</a>
-            <a href="/about" class="block py-2 text-gray-700 hover:text-primary-600">About</a>
-            <a href="/faq" class="block py-2 text-gray-700 hover:text-primary-600">FAQ</a>
-            <a href="/blog" class="block py-2 text-gray-700 hover:text-primary-600">Blog</a>
+            <a href="/home/about" class="block py-2 text-gray-700 hover:text-primary-600">About</a>
+            <a href="/home/faq" class="block py-2 text-gray-700 hover:text-primary-600">FAQ</a>
+            <a href="/home/blog" class="block py-2 text-gray-700 hover:text-primary-600">Blog</a>
             <hr class="my-2">
             @if (User.Identity?.IsAuthenticated ?? false)
             {
@@ -260,7 +260,6 @@
             <div class="border-t border-gray-300 pt-8">
                 <div class="flex flex-col md:flex-row justify-between items-center text-sm text-gray-100">
                     <p>© 2026 Connect Grow Support. All Rights Reserved.</p>
-                    <p>Content is protected by copyright law. Unauthorized reproduction is prohibited.</p>
                 </div>
             </div>
         </div>

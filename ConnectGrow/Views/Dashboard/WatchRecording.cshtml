@@ -20,20 +20,16 @@
                 <!-- Video Player -->
                 <div class="bg-black rounded-lg overflow-hidden shadow-lg mb-6 relative">
                     
-                    <!-- Vimeo Player -->
-                    <iframe
-                        src="https://player.vimeo.com/video/1234567890?h=abcdef&token=xyz"
-                        width="100%"
-                        height="600"
-                        frameborder="0"
-                        allow="autoplay"
-                        allowfullscreen
-                        style="aspect-ratio: 16 / 9;">
-                    </iframe>
+                    <!-- Video Player -->
+                     
+                    <img src="~/images/webinars/dyslexia.jpg" 
+                         alt="Autism Spectrum Awareness Banner" 
+                        class="w-full h-48 sm:h-64 md:h-80 lg:h-96 object-cover" />
+                
                     
                     <!-- Offline Badge -->
                     <div id="offline-badge" style="display: none;" class="absolute top-4 right-4 bg-yellow-500 text-white px-3 py-1 rounded-full text-sm font-semibold">
-                        📡 Playing from cache
+                        Playing from cache
                     </div>
                 </div>
                 
@@ -67,14 +63,12 @@
                     
                     <div class="space-y-3">
                         <button class="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 text-left font-semibold text-gray-900 flex items-center gap-2">
-                            📖 View Transcript
+                            View Transcript
                         </button>
                         <button class="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 text-left font-semibold text-gray-900 flex items-center gap-2">
-                            📥 Save Bookmark
+                            Save Bookmark
                         </button>
-                        <button class="w-full p-3 border border-gray-300 rounded-lg hover:bg-gray-50 text-left font-semibold text-gray-900 flex items-center gap-2">
-                            🔗 Copy Link (expires in 4 hours)
-                        </button>
+                       
                     </div>
                 </div>
             </div>
@@ -93,27 +87,27 @@
                 
                 <!-- Learning Materials -->
                 <div class="bg-white rounded-lg shadow p-6 mb-6">
-                    <h3 class="text-lg font-bold text-gray-900 mb-4">📚 Materials</h3>
+                    <h3 class="text-lg font-bold text-gray-900 mb-4">Materials</h3>
                     <div class="space-y-2">
                         <a href="#" class="block p-3 bg-gray-50 rounded hover:bg-gray-100 text-primary-600 font-semibold text-sm">
-                            📄 Presentation Slides
+                            Presentation Slides
                         </a>
                         <a href="#" class="block p-3 bg-gray-50 rounded hover:bg-gray-100 text-primary-600 font-semibold text-sm">
-                            📋 AAC Resources List
+                            AAC Resources List
                         </a>
                         <a href="#" class="block p-3 bg-gray-50 rounded hover:bg-gray-100 text-primary-600 font-semibold text-sm">
-                            🔗 Tool Recommendations
+                            Tool Recommendations
                         </a>
                     </div>
                 </div>
                 
                 <!-- Evaluation -->
-                <div class="bg-primary-50 border border-primary-200 rounded-lg p-6">
+                <div class="gradient-primary border rounded-lg p-6">
                     <h3 class="font-bold text-gray-900 mb-2">✓ Attended & Completed</h3>
                     <p class="text-sm text-gray-700 mb-4">
                         You've finished this webinar. Share your feedback with us!
                     </p>
-                    <a href="/dashboard/evaluations/create?recordingId=123" class="block w-full py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-semibold text-center">
+                    <a href="/dashboard/createevaluations" class="block w-full py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-semibold text-center">
                         Leave Feedback
                     </a>
                 </div>

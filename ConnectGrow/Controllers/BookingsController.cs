@@ -6,7 +6,7 @@ namespace ConnectGrow.Controllers;
 
 public class BookingsController : Controller
 {
-    public IActionResult Index()
+    public IActionResult Confirmation()
     {
         return View();
     }
