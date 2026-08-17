@@ -18,23 +18,27 @@
             <div class="flex gap-2 bg-white rounded-lg p-2 shadow border border-gray-200">
                 <button x-on:click="tab = 'profile'" 
                     :class="tab === 'profile' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth">
-                    👤 Profile
+                    class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded font-semibold transition-smooth">
+                    <img src="~/images/personsingle.png" alt="Profile" class="w-5 h-5 object-contain flex-shrink-0" />
+                    <span>Profile</span>
                 </button>
                 <button x-on:click="tab = 'password'" 
                     :class="tab === 'password' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth">
-                    🔐 Password
+                    class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded font-semibold transition-smooth">
+                    <img src="~/images/password.png" alt="Password" class="w-5 h-5 object-contain flex-shrink-0" />
+                    <span>Password</span>
                 </button>
                 <button x-on:click="tab = 'preferences'" 
                     :class="tab === 'preferences' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth">
-                    ⚙️ Preferences
+                    class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded font-semibold transition-smooth">
+                    <img src="~/images/settings.png" alt="Preferences" class="w-5 h-5 object-contain flex-shrink-0" />
+                    <span>Preferences</span>
                 </button>
                 <button x-on:click="tab = 'security'" 
                     :class="tab === 'security' ? 'bg-primary-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-100'"
-                    class="flex-1 px-4 py-2 rounded font-semibold transition-smooth">
-                    🔒 Security
+                    class="flex-1 inline-flex items-center justify-center gap-2 px-4 py-2 rounded font-semibold transition-smooth">
+                    <img src="~/images/security.png" alt="Security" class="w-5 h-5 object-contain flex-shrink-0" />
+                    <span>Security</span>
                 </button>
             </div>
             
@@ -148,15 +152,7 @@
                 <h2 class="text-2xl font-bold text-gray-900">Security</h2>
                 
                 <div class="space-y-4">
-                    
-                    <div class="border border-gray-200 rounded p-4">
-                        <div class="flex items-center justify-between mb-2">
-                            <h3 class="font-semibold text-gray-900">Two-Factor Authentication</h3>
-                            <button class="text-primary-600 hover:text-primary-700 font-semibold text-sm">Enable</button>
-                        </div>
-                        <p class="text-sm text-gray-600">Add an extra layer of security to your account</p>
-                    </div>
-                    
+ 
                     <div class="border border-gray-200 rounded p-4">
                         <div class="flex items-center justify-between mb-2">
                             <h3 class="font-semibold text-gray-900">Login History</h3>
