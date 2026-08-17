@@ -6,6 +6,9 @@ at this stage.
 
 The main purpose of the prototype is for demonstration and design review.
 
+To view. short demonstration of the prototype you can watch the video below
+https://youtu.be/fi0I6idR8i4
+
 
 ## Download
 
@@ -58,7 +61,7 @@ cd ConnectSupportGrow
 
 ---
 
-## 📄 Pages Overview
+## Pages Overview
 
 ### Public Pages (No Login)
 
@@ -127,4 +130,22 @@ cd ConnectSupportGrow
 - .NET 8 SDK
 - Visual Studio 2022 or VS Code
 - See full setup guide in project
+
+--- 
+INSY7315 Part 1 Prototype 
+
+BCA 3 
+
+Group 1
+
+Group 5
+
+
+| Team Member | Student Number | 
+|------|------|
+| Abdullah Essack | ST10249469 |
+| Muhammad Hoosen	| ST10450812 |
+| Samantha Reddy | ST10454507 |
+| Yusuf Omar | ST10439907 |
+| Zahraa Goga | ST10445649 |
 
