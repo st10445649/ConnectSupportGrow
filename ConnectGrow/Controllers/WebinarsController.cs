@@ -11,7 +11,7 @@ public class WebinarsController : Controller
         return View();
     }
 
-     public IActionResult Details()
+     public IActionResult Detail()
     {
         return View();
     }

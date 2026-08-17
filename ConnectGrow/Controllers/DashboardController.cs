@@ -16,4 +16,10 @@ public class DashboardController : Controller
         return View();
     }
 
+     public IActionResult WatchRecording()
+    {
+        return View();
+    }
+
+
 }
