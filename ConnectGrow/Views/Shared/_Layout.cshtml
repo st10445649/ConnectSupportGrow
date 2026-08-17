@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - Connect Grow Support</title>
+    <title>@ViewBag.Title - Connect Support Grow</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -88,6 +88,11 @@
         .gradient-accent {
             background: linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%);
         }
+
+        /* Gradient backgrounds */
+        .gradient-header {
+            background: linear-gradient(135deg, #8fe9f3 0%, #f38fe0 100%);
+        }
     </style>
 </head>
 <body class="bg-white">
@@ -103,7 +108,7 @@
                     <img src="~/images/logo.png" 
                         alt="Connect Grow Support Logo" 
                         class="w-8 h-8 md:w-9 md:h-9 object-contain flex-shrink-0" />
-                    <span>Connect Grow Support</span>
+                    <span>Connect Support Grow</span>
                 </a>
             </div>
             
@@ -111,9 +116,9 @@
             <div class="hidden md:flex items-center gap-6">
                 <a href="/" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">Home</a>
                 <a href="/webinars" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">Webinars</a>
-                <a href="/about" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">About</a>
-                <a href="/faq" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">FAQ</a>
-                <a href="/blog" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">Blog</a>
+                <a href="/home/about" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">About</a>
+                <a href="/home/faq" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">FAQ</a>
+                <a href="/home/blog" class="text-gray-700 hover:text-primary-600 transition-smooth font-medium">Blog</a>
             </div>
             
             @* Auth & User Menu *@
