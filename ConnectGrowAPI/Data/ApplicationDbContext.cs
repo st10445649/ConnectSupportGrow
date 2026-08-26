@@ -17,6 +17,7 @@ public class ApplicationDbContext : DbContext
             public DbSet<Evaluation> Evaluations => Set<Evaluation>();
             public DbSet<Faq> Faqs => Set<Faq>();
             public DbSet<BlogPost> BlogPosts => Set<BlogPost>();
+            public DbSet<RefreshToken> RefreshTokens => Set<RefreshToken>();
 
         protected override void OnModelCreating(ModelBuilder builder)
     {
