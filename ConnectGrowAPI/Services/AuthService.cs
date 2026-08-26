@@ -318,7 +318,7 @@ public class AuthService : IAuthService
             CreatedByIp = ip
         });
 
-        await PruneExpiredTokensAsync(user.Id, ct);
+        await CutExpiredTokensAsync(user.Id, ct);
         await _db.SaveChangesAsync(ct);
 
         return Result<AuthResponse>.Success(new AuthResponse
