@@ -13,6 +13,10 @@ namespace ConnectGrowAPI.Services;
 //https://www.youtube.com/watch?v=G6eEPPBIkh8 
 
 //https://indotalent.com/blog/aspnet-core-identity-jwt-mvc.html?srsltid=AfmBOoqiAb5vq45DK35ztBkt-cFAbK2ZHskT8hoLLuuVfpe7vcYlOoPi
+
+//https://www.descope.com/learn/post/refresh-token
+//https://learn.microsoft.com/en-us/dotnet/api/system.identitymodel.tokens?view=net-11.0-pp 
+//https://towardsdev.com/understanding-refresh-tokens-in-web-api-development-with-c-17761a591cfc 
 public class JwtOptions
 {
     public const string SectionName = "Jwt";
