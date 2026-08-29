@@ -6,16 +6,18 @@ using ConnectGrowAPI.Services;
 using ConnectGrowAPI.Services.Payments;
 using Microsoft.Extensions.Options;
 
-namespace CSG.Api.Services.Payments;
+namespace ConnectGrowAPI.Services.Payments;
 
-/// <summary>
-/// Builds a signed Payfast checkout URL. No card data touches this application:
-/// the buyer is redirected to Payfast's hosted page and returns afterwards.
-///
-/// The redirect is the buyer's journey only. Payment is confirmed exclusively by
-/// the ITN callback — a buyer who closes the tab before returning has still
-/// paid, and a buyer who reaches the return URL has not necessarily paid.
-/// </summary>
+
+//https://developers.payfast.co.za/api#introduction 
+//helps to build a signed payfast checkout url
+//redirects to payfast and returns back to app after.
+
+//the app does not know what happens after redirect.
+//just receives ITN callback 
+
+
+//implements payment service. any other payment option can use this service too 
 public class PayFastPaymentService : IPaymentService
 {
     private readonly PayFastOptions _options;
