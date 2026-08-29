@@ -234,6 +234,27 @@ app.MapControllers();
  
 app.MapGet("/health", () => Results.Ok(new { status = "healthy", utc = DateTime.UtcNow }))
    .AllowAnonymous();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var logger = services.GetRequiredService<ILogger<Program>>();
+ 
+    try
+    {
+        var db = services.GetRequiredService<ApplicationDbContext>();
+        await db.Database.MigrateAsync();
+ 
+        await DbSeeder.SeedAsync(services);
+        logger.LogInformation("Database migrated and seeded.");
+    }
+    catch (Exception ex)
+    {
+        logger.LogError(ex, "Database migration or seeding failed.");
+        throw;
+    }
+}
  
 app.Run();
  

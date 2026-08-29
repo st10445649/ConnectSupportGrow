@@ -1,9 +1,11 @@
 using ConnectGrowAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 
 namespace ConnectGrowAPI.Data;
 
-public class ApplicationDbContext : DbContext
+public class ApplicationDbContext
+    : IdentityDbContext<ApplicationUser, ApplicationRole, Guid>
     {
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) 
