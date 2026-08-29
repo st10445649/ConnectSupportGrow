@@ -5,6 +5,7 @@ using Microsoft.Extensions.Options;
 
 namespace ConnectGrowAPI.Services.Payments;
 
+//https://support.payfast.help/portal/en/kb/articles/how-to-set-up-and-test-your-payfast-gateway-integration 
 public record ItnValidationResult(bool IsValid, string? FailureReason)
 {
     public static ItnValidationResult Valid() => new(true, null);

@@ -12,6 +12,8 @@ namespace ConnectGrowAPI.Services.Payments;
 public static class PayFastSignatureHelper
 {
 
+//https://medium.com/oceanize-geeks/php-urlencode-vs-rawurlencode-f6e9f049599a 
+//https://www.c-sharpcorner.com/article/web-developers-guide-to-url-encoding-and-decoding-mastery/
     public static string UrlEncode(string? value)
     {
         if (string.IsNullOrEmpty(value)) return string.Empty;
