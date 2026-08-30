@@ -14,8 +14,10 @@ using ConnectGrowAPI.Services;
 using Microsoft.AspNetCore.OpenApi;
 using ConnectGrowAPI.Api.Data;
 using Microsoft.OpenApi;
+using ConnectGrowAPI.Services.Payments;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Configuration.AddJsonFile("appsettingsDev.json", optional: true, reloadOnChange: true);
 
 var connectionString = builder.Configuration["CSG_DB"]
     ?? throw new InvalidOperationException(
@@ -69,6 +71,7 @@ builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptio
  
 var jwtOptions = builder.Configuration.GetSection(JwtOptions.SectionName).Get<JwtOptions>()
     ?? throw new InvalidOperationException("The Jwt configuration section is missing.");
+    
 var jwtKey = builder.Configuration["CSG_JwtKey"];
  
 if (string.IsNullOrWhiteSpace(jwtKey) || Encoding.UTF8.GetByteCount(jwtKey) < 32)
@@ -168,7 +171,29 @@ builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IWebinarService, WebinarService>();
- builder.Services.AddScoped<IPaymentService, NullPaymentService>();
+
+builder.Services.Configure<PayFastOptions>(
+    builder.Configuration.GetSection(PayFastOptions.SectionName));
+ 
+var payFastConfigured = !string.IsNullOrWhiteSpace(
+    builder.Configuration[$"{PayFastOptions.SectionName}:MerchantId"]);
+ 
+if (payFastConfigured)
+{
+    builder.Services.AddScoped<IPaymentService, PayFastPaymentService>();
+}
+else
+{
+    builder.Services.AddScoped<IPaymentService, NullPaymentService>();
+}
+ 
+builder.Services.AddScoped<IPayFastItnValidator, PayFastItnValidator>();
+ 
+builder.Services.AddHttpClient(PayFastItnValidator.HttpClientName, client =>
+{
+    client.Timeout = TimeSpan.FromSeconds(15);
+    client.DefaultRequestHeaders.Add("User-Agent", "CSG-Platform/1.0");
+});
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

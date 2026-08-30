@@ -5,7 +5,7 @@ using ConnectGrowAPI.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CSG.Api.Controllers;
+namespace ConnectGrowAPI.Controllers;
 
 // Booking endpoints. Every action requires authentication; ownership is checked inside the service rather than trusted from the request.
 
