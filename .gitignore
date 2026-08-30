@@ -482,3 +482,4 @@ $RECYCLE.BIN/
 *.swp
 
 ConnectGrowAPI/appsettingsDev.json
+ConnectGrowAPI/appsettings.Development.json

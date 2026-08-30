@@ -10,7 +10,6 @@ namespace ConnectGrowAPI.Api.Controllers;
 
 //auth controller responsible for authorisation and user management handling of requests
 [Route("api/auth")]
-[AllowAnonymous]
 public class AuthController : ApiControllerBase
 {
     public const string AccessTokenCookie = "csg.access";
