@@ -116,7 +116,13 @@ builder.Services
             // header is present.
             OnMessageReceived = context =>
             {
-                if (string.IsNullOrEmpty(context.Token))
+
+                var hasAuthorizationHeader = context.Request.Headers
+                    .TryGetValue("Authorization", out var header)
+                    && header.Count > 0
+                    && !string.IsNullOrWhiteSpace(header[0]);
+ 
+                if (!hasAuthorizationHeader && string.IsNullOrEmpty(context.Token))
                 {
                     var fromCookie = context.Request.Cookies[AuthController.AccessTokenCookie];
                     if (!string.IsNullOrEmpty(fromCookie))
@@ -124,6 +130,7 @@ builder.Services
                 }
  
                 return Task.CompletedTask;
+ 
             },
  
             OnChallenge = context =>
@@ -213,23 +220,13 @@ builder.Services.AddSwaggerGen(options =>
         Scheme = "bearer",
         BearerFormat = "JWT",
         In = ParameterLocation.Header,
-        Description = "Paste the access token returned by /api/auth/login."
+        Description = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjI5YzM3OWIwLWRmYzgtNDY2MC05Zjc5LTFmOWQyYTI5MGUxNSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6InNhbWpvbmVzQGV4YW1wbGUuY29tIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvZ2l2ZW5uYW1lIjoiU2FtIiwiaHR0cDovL3NjaGVtYXMueG1sc29hcC5vcmcvd3MvMjAwNS8wNS9pZGVudGl0eS9jbGFpbXMvc3VybmFtZSI6IkpvbmVzIiwianRpIjoiNWMwNTJlMjYtNzJlYi00ZTUyLTg4ZDktMDUxMTg3OWJkOWE0IiwiaWF0IjoxNzg4MDk2MjM1LCJodHRwOi8vc2NoZW1hcy5taWNyb3NvZnQuY29tL3dzLzIwMDgvMDYvaWRlbnRpdHkvY2xhaW1zL3JvbGUiOiJVc2VyIiwibmJmIjoxNzg4MDk2MjM1LCJleHAiOjE3ODgwOTk4MzUsImlzcyI6ImNzZy1hcGkiLCJhdWQiOiJjc2ctY2xpZW50In0.vsns0LvvI-wLuIdcz_-a0cimkG3OMQUfsrs5Uhhx9_k."
     });
- /* 
-    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+  
+    options.AddSecurityRequirement(document => new OpenApiSecurityRequirement
     {
-        {
-            new OpenApiSecurityScheme
-            {
-                Reference = new OpenApiReference
-                {
-                    Type = ReferenceType.SecurityScheme,
-                    Id = "Bearer"
-                }
-            },
-            Array.Empty<string>()
-        }
-    }); */
+        [new OpenApiSecuritySchemeReference("Bearer", document)] = new List<string>()
+    });
 });
 
  

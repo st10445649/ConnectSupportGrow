@@ -61,7 +61,10 @@ public class AuthController : ApiControllerBase
     public async Task<ActionResult<AuthResponse>> Refresh(
         [FromBody] RefreshTokenRequest? request, CancellationToken ct)
     {
-        var token = Request.Cookies[RefreshTokenCookie] ?? request?.RefreshToken;
+        var token = !string.IsNullOrWhiteSpace(request?.RefreshToken)
+            ? request!.RefreshToken
+            : Request.Cookies[RefreshTokenCookie];
+ 
 
         var result = await _auth.RefreshAsync(token ?? string.Empty, ClientIp(), ct);
 
