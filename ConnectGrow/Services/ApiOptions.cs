@@ -4,7 +4,7 @@ public class ApiOptions
     public const string SectionName = "Api";
  
     //base address
-    public string BaseUrl { get; set; } = string.Empty;
+    public string BaseUrl { get; set; } = "http://localhost:5212";
  
     public int TimeoutSeconds { get; set; } = 30;
 }
