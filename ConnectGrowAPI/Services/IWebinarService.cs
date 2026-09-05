@@ -215,7 +215,8 @@ public class WebinarService : IWebinarService
         AvailableSeats = w.AvailableSeats,
         IsSoldOut = w.IsSoldOut,
         FeaturedImageUrl = w.FeaturedImageUrl,
-        PresenterName = w.PresenterName
+        PresenterName = w.PresenterName,
+        Status = w.Status.ToString()
     };
 
     private static WebinarDetailDto MapToDetail(Webinar w) => new()
