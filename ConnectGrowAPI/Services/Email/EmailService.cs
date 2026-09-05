@@ -51,6 +51,7 @@ public class NoOpEmailService : IEmailService
 
     public NoOpEmailService(ILogger<NoOpEmailService> logger) => _logger = logger;
 
+    // just for testing. if something is broken in the backend the whole process won't crash
     private Task<bool> Skip(string kind, string recipient)
     {
         _logger.LogWarning(
