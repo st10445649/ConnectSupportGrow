@@ -41,6 +41,14 @@ builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddScoped<ISignInService, SignInService>();
 builder.Services.AddTransient<BearerTokenHandler>();
+
+builder.Services
+    .AddHttpClient<IAdminClient, AdminWebinarApiClient>(client =>
+    {
+        client.BaseAddress = new Uri(apiOptions.BaseUrl);
+        client.Timeout = TimeSpan.FromSeconds(apiOptions.TimeoutSeconds);
+    })
+    .AddHttpMessageHandler<BearerTokenHandler>();
  
 
  //https://postsharp.net/blog/polly 
