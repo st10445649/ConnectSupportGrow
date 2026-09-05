@@ -1,100 +1,190 @@
+@using ConnectGrow.Services
+@model ConnectGrow.Areas.Admin.Controllers.AdminDashboardViewModel
+@{
+    ViewBag.Title = "Admin Dashboard";
+}
 
+<section class="py-8">
+    <div class="container mx-auto px-4">
 
+        @if (ViewBag.Error is not null)
+        {
+            <div role="alert" class="mb-6 bg-red-50 border border-red-200 rounded-lg p-4 text-red-800">
+                Stats could not be loaded. @ViewBag.Error
+            </div>
+        }
+
+        @if (TempData["Message"] is string successMessage)
+        {
+            <div role="status" class="mb-6 bg-green-50 border border-green-200 rounded-lg p-4 text-green-800">
+                @successMessage
+            </div>
+        }
+
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-primary-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Upcoming Webinars</p>
+                <p class="text-4xl font-bold text-primary-600">@Model.UpcomingCount</p>
+                <p class="text-xs text-gray-500 mt-2">published and scheduled</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-secondary-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Seats Booked</p>
+                <p class="text-4xl font-bold text-secondary-600">@Model.SeatsBooked</p>
+                <p class="text-xs text-gray-500 mt-2">@Model.SeatsAvailable still available</p>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-accent-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Capacity Filled</p>
+                <p class="text-4xl font-bold text-accent-600">@Model.FillPercentage%</p>
+                <div class="w-full bg-gray-200 rounded-full h-2 mt-3">
+                    <div class="bg-accent-500 h-2 rounded-full" style="width: @(Model.FillPercentage)%"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow p-6 border-l-4 border-yellow-500">
+                <p class="text-gray-600 text-sm font-semibold mb-2">Drafts</p>
+                <p class="text-4xl font-bold text-yellow-600">@Model.DraftCount</p>
+                <p class="text-xs text-gray-500 mt-2">
+                    @(Model.DraftCount == 0 ? "nothing waiting" : "not yet published")
+                </p>
+            </div>
+        </div>
+
+        @if (Model.NextUp.Any() || Model.NearlyFull.Any())
+        {
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+
+                @if (Model.NextUp.Any())
+                {
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-4">Next Up</h3>
+                        <ul class="space-y-3">
+                            @foreach (var webinar in Model.NextUp)
+                            {
+                                <li class="flex items-center justify-between gap-4 border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+                                    <div class="min-w-0">
+                                        <a asp-area="Admin" asp-controller="Webinars" asp-action="Edit" asp-route-id="@webinar.Id"
+                                           class="font-semibold text-gray-900 hover:text-primary-600 truncate block">
+                                            @webinar.Title
+                                        </a>
+                                        <p class="text-xs text-gray-500">@webinar.StartDateTime.ToSastDisplay()</p>
+                                    </div>
+                                    <span class="text-sm font-semibold text-gray-700 whitespace-nowrap">
+                                        @(webinar.Capacity - webinar.AvailableSeats) / @webinar.Capacity
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+
+                @if (Model.NearlyFull.Any())
+                {
+                    <div class="bg-white rounded-lg shadow p-6">
+                        <h3 class="font-bold text-lg text-gray-900 mb-1">Nearly Full</h3>
+                        <p class="text-xs text-gray-500 mb-4">Consider scheduling a repeat session</p>
+                        <ul class="space-y-3">
+                            @foreach (var webinar in Model.NearlyFull)
+                            {
+                                <li class="flex items-center justify-between gap-4 border-b border-gray-100 pb-3 last:border-0 last:pb-0">
+                                    <div class="min-w-0">
+                                        <p class="font-semibold text-gray-900 truncate">@webinar.Title</p>
+                                        <p class="text-xs text-gray-500">@webinar.StartDateTime.ToSastDate()</p>
+                                    </div>
+                                    <span class="px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap @(webinar.IsSoldOut ? "bg-red-100 text-red-800" : "bg-amber-100 text-amber-800")">
+                                        @(webinar.IsSoldOut ? "Sold out" : $"{webinar.AvailableSeats} left")
+                                    </span>
+                                </li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        }
+    </div>
+</section>
+
+<div class="container mx-auto px-4 pb-12">
 <aside class="bg-gradient-to-b from-white to-gray-50 p-6 rounded-lg shadow-sm border border-gray-200">
-    
+
     <h3 class="font-bold text-lg md:text-xl text-gray-900 mb-6 flex items-center">
         <span class="text-2xl mr-3"></span>
         Admin Dashboard
     </h3>
-    
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-        
-        <a asp-area="Admin" asp-controller="Dashboard" asp-action="Index" 
-           class="group bg-white hover:bg-gradient-to-br hover:from-purple-50 hover:to-purple-100 border border-gray-200 hover:border-purple-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
-            <div class="flex flex-col items-center text-center">
-                <img src="~/images/dashboard.png" 
-                     alt="Dashboard" 
-                     class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
-                <h4 class="font-semibold text-gray-900 text-sm md:text-base">Dashboard</h4>
-                <p class="text-xs text-gray-600 mt-1">View analytics</p>
-            </div>
-        </a>
-        
-        <a asp-area="Admin" asp-controller="Webinars" asp-action="Index" 
+
+        <a asp-area="Admin" asp-controller="Webinars" asp-action="Index"
            class="group bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-blue-100 border border-gray-200 hover:border-blue-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
             <div class="flex flex-col items-center text-center">
-                <img src="~/images/analytics.png" 
-                     alt="Webinars" 
+                <img src="~/images/analytics.png" alt="Webinars"
                      class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
                 <h4 class="font-semibold text-gray-900 text-sm md:text-base">Webinars</h4>
                 <p class="text-xs text-gray-600 mt-1">Manage sessions</p>
             </div>
         </a>
-        
-        <a asp-area="Admin" asp-controller="Recordings" asp-action="Index" 
+
+        <a asp-area="Admin" asp-controller="Recordings" asp-action="Index"
            class="group bg-white hover:bg-gradient-to-br hover:from-red-50 hover:to-red-100 border border-gray-200 hover:border-red-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
             <div class="flex flex-col items-center text-center">
-                <img src="~/images/recording.png" 
-                     alt="Recordings" 
+                <img src="~/images/recording.png" alt="Recordings"
                      class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
                 <h4 class="font-semibold text-gray-900 text-sm md:text-base">Recordings</h4>
-                <p class="text-xs text-gray-600 mt-1">Grant access</p>
+                <p class="text-xs text-gray-500 mt-1">Not yet connected</p>
             </div>
         </a>
-        
-        <a asp-area="Admin" asp-controller="Analytics" asp-action="Index" 
+
+        <a asp-area="Admin" asp-controller="Analytics" asp-action="Index"
            class="group bg-white hover:bg-gradient-to-br hover:from-green-50 hover:to-green-100 border border-gray-200 hover:border-green-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
             <div class="flex flex-col items-center text-center">
-                <img src="~/images/analytics.png" 
-                     alt="Analytics" 
+                <img src="~/images/analytics.png" alt="Analytics"
                      class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
                 <h4 class="font-semibold text-gray-900 text-sm md:text-base">Analytics</h4>
-                <p class="text-xs text-gray-600 mt-1">View metrics</p>
+                <p class="text-xs text-gray-500 mt-1">Not yet connected</p>
             </div>
         </a>
-        
-        <a asp-area="Admin" asp-controller="Attendance" asp-action="Index" 
+
+        <a asp-area="Admin" asp-controller="Attendance" asp-action="Index"
            class="group bg-white hover:bg-gradient-to-br hover:from-yellow-50 hover:to-yellow-100 border border-gray-200 hover:border-yellow-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
             <div class="flex flex-col items-center text-center">
-                <img src="~/images/personicon.png" 
-                     alt="Attendance" 
+                <img src="~/images/personicon.png" alt="Attendance"
                      class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
                 <h4 class="font-semibold text-gray-900 text-sm md:text-base">Attendance</h4>
-                <p class="text-xs text-gray-600 mt-1">Track participants</p>
+                <p class="text-xs text-gray-500 mt-1">Not yet connected</p>
             </div>
         </a>
-        
-        <a asp-area="Admin" asp-controller="Email" asp-action="BulkRecording" 
+
+        <a asp-area="Admin" asp-controller="Email" asp-action="BulkRecording"
            class="group bg-white hover:bg-gradient-to-br hover:from-indigo-50 hover:to-indigo-100 border border-gray-200 hover:border-indigo-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
             <div class="flex flex-col items-center text-center">
-                <img src="~/images/email.png" 
-                     alt="Email" 
+                <img src="~/images/email.png" alt="Email"
                      class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
                 <h4 class="font-semibold text-gray-900 text-sm md:text-base">Email</h4>
-                <p class="text-xs text-gray-600 mt-1">Send messages</p>
+                <p class="text-xs text-gray-500 mt-1">Not yet connected</p>
             </div>
         </a>
-        
-        <a asp-area="Admin" asp-controller="Blog" asp-action="Index" 
+
+        <a asp-area="Admin" asp-controller="Blog" asp-action="Index"
            class="group bg-white hover:bg-gradient-to-br hover:from-pink-50 hover:to-pink-100 border border-gray-200 hover:border-pink-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
             <div class="flex flex-col items-center text-center">
-                <img src="~/images/blog.png" 
-                     alt="Blog" 
+                <img src="~/images/blog.png" alt="Blog"
                      class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
                 <h4 class="font-semibold text-gray-900 text-sm md:text-base">Blog</h4>
-                <p class="text-xs text-gray-600 mt-1">Manage content</p>
+                <p class="text-xs text-gray-500 mt-1">Not yet connected</p>
             </div>
         </a>
-        
-        <a asp-area="Admin" asp-controller="Faq" asp-action="Index" 
+
+        <a asp-area="Admin" asp-controller="Faq" asp-action="Index"
            class="group bg-white hover:bg-gradient-to-br hover:from-orange-50 hover:to-orange-100 border border-gray-200 hover:border-orange-300 rounded-lg p-4 transition-all duration-200 shadow-sm hover:shadow-md">
             <div class="flex flex-col items-center text-center">
-                <img src="~/images/faq.png" 
-                     alt="FAQ" 
+                <img src="~/images/faq.png" alt="FAQ"
                      class="w-12 h-12 md:w-14 md:h-14 mb-3 group-hover:scale-110 transition-transform" />
                 <h4 class="font-semibold text-gray-900 text-sm md:text-base">FAQ</h4>
-                <p class="text-xs text-gray-600 mt-1">Update FAQs</p>
+                <p class="text-xs text-gray-500 mt-1">Not yet connected</p>
             </div>
         </a>
     </div>
 </aside>
+</div>

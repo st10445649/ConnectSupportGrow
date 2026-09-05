@@ -17,6 +17,8 @@ namespace ConnectGrowAPI.Dtos;
     public bool IsSoldOut { get; set; }
     public string? FeaturedImageUrl { get; set; }
     public string? PresenterName { get; set; }
+
+    public string Status { get; set; } = string.Empty;
 }
  
 public class WebinarDetailDto : WebinarListDto
@@ -24,7 +26,6 @@ public class WebinarDetailDto : WebinarListDto
     public string Description { get; set; } = string.Empty;
     public string? PresenterBio { get; set; }
     public List<string> LearningOutcomes { get; set; } = new();
-    public string Status { get; set; } = string.Empty;
 }
  
 public class CreateWebinarRequest
