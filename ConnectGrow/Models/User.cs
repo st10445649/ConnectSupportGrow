@@ -107,3 +107,9 @@ public class SettingsViewModel
  
     public string ActiveTab { get; set; } = "profile";
 }
+
+ public class ForgotPasswordResponse
+{
+    public string Message { get; set; } = string.Empty;
+    public string? DevResetToken { get; set; }
+}

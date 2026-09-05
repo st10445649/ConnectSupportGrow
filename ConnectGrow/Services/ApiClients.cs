@@ -1,4 +1,5 @@
 using ConnectGrow.Models;
+
 namespace ConnectGrow.Services;
 
 
@@ -9,17 +10,24 @@ while keeping individual API callers clean and testable.
 https://www.c-sharpcorner.com/article/understanding-the-options-pattern-in-asp-net-core-with-a-practical-example
 https://learn.microsoft.com/en-us/aspnet/core/fundamentals/configuration/options?view=aspnetcore-10.0 
  */
- public interface IAuthApiClient
+ public partial interface IAuthApiClient
 {
     Task<ApiResult<AuthResponseModel>> LoginAsync(string email, string password, CancellationToken ct = default);
     Task<ApiResult<AuthResponseModel>> RegisterAsync(RegisterInputModel input, CancellationToken ct = default);
     Task<ApiResult<AuthResponseModel>> RefreshAsync(string refreshToken, CancellationToken ct = default);
     Task<ApiResult<Users>> GetProfileAsync(CancellationToken ct = default);
     Task<ApiResult> LogoutAsync(CancellationToken ct = default);
+
+     Task<ApiResult<Users>> UpdateProfileAsync(UpdateProfileInputModel input, CancellationToken ct = default);
+    Task<ApiResult> ChangePasswordAsync(ChangePasswordInputModel input, CancellationToken ct = default);
+ 
+    Task<ApiResult<ForgotPasswordResponse>> ForgotPasswordAsync(string email, CancellationToken ct = default);
+ 
+    Task<ApiResult> ResetPasswordAsync(ResetPasswordInputModel input, CancellationToken ct = default);
 }
 
 //Auth
-public class AuthApiClient : ApiClientBase, IAuthApiClient
+public partial class AuthApiClient : ApiClientBase, IAuthApiClient
 {
    
     public const string HttpClientName = "csg-api-anonymous";
@@ -52,6 +60,40 @@ public class AuthApiClient : ApiClientBase, IAuthApiClient
 
     public Task<ApiResult> LogoutAsync(CancellationToken ct = default) =>
         PostAsync("/api/auth/logout", null, ct);
+
+    public Task<ApiResult<Users>> UpdateProfileAsync(
+        UpdateProfileInputModel input, CancellationToken ct = default) =>
+        PutAsync<Users>("/api/auth/profile", new
+        {
+            firstName = input.FirstName,
+            lastName = input.LastName,
+            email = input.Email,
+            phoneNumber = input.PhoneNumber,
+            organisation = input.Organisation
+        }, ct);
+ 
+    public Task<ApiResult> ChangePasswordAsync(
+        ChangePasswordInputModel input, CancellationToken ct = default) =>
+        PostAsync("/api/auth/change-password", new
+        {
+            currentPassword = input.CurrentPassword,
+            newPassword = input.NewPassword,
+            confirmPassword = input.ConfirmPassword
+        }, ct);
+ 
+    public Task<ApiResult<ForgotPasswordResponse>> ForgotPasswordAsync(
+        string email, CancellationToken ct = default) =>
+        PostAsync<ForgotPasswordResponse>("/api/auth/forgot-password", new { email }, ct);
+ 
+    public Task<ApiResult> ResetPasswordAsync(
+        ResetPasswordInputModel input, CancellationToken ct = default) =>
+        PostAsync("/api/auth/reset-password", new
+        {
+            email = input.Email,
+            token = input.Token,
+            newPassword = input.NewPassword,
+            confirmPassword = input.ConfirmPassword
+        }, ct);
 }
 
 // Webinars
