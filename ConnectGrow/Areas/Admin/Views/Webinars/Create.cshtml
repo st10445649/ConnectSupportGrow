@@ -1,111 +1,164 @@
+@model ConnectGrow.Models.AdminInputModel
 @{
     ViewBag.Title = "Create Webinar";
 }
 
 <section class="bg-white border-b border-gray-200 py-8">
     <div class="container mx-auto px-4">
-        <a href="/admin/webinars" class="text-primary-600 hover:text-primary-700 font-semibold text-sm">← Back to Webinars</a>
+        <a asp-action="Index" class="text-primary-600 hover:text-primary-700 font-semibold text-sm">← Back to Webinars</a>
         <h1 class="text-3xl font-bold text-gray-900 mt-2">Create New Webinar</h1>
     </div>
 </section>
 
 <section class="py-12 bg-gray-50">
     <div class="container mx-auto px-4 max-w-3xl">
-        
-        <form method="post" action="/admin/webinars/save" class="bg-white rounded-lg shadow p-8 space-y-6">
-            
-            <!-- Title -->
+
+        <form asp-action="Create" method="post" class="bg-white rounded-lg shadow p-8 space-y-6">
+            @Html.AntiForgeryToken()
+
+            <div asp-validation-summary="ModelOnly" role="alert"
+                 class="rounded border border-red-200 bg-red-50 p-4 text-sm text-red-800 empty:hidden"></div>
+
             <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-2">Title *</label>
-                <input type="text" name="title" required placeholder="Enter webinar title"
+                <label asp-for="Title" class="block text-sm font-semibold text-gray-900 mb-2">Title *</label>
+                <input asp-for="Title" placeholder="Enter webinar title"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <span asp-validation-for="Title" class="text-sm text-red-700"></span>
             </div>
-            
-            <!-- Description -->
+
             <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-2">Description *</label>
-                <textarea name="description" required rows="5" placeholder="Full webinar description..."
+                <label asp-for="Description" class="block text-sm font-semibold text-gray-900 mb-2">Description *</label>
+                <textarea asp-for="Description" rows="5" placeholder="Full webinar description..."
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                <span asp-validation-for="Description" class="text-sm text-red-700"></span>
+            </div>
+
+            <div>
+                <label asp-for="Category" class="block text-sm font-semibold text-gray-900 mb-2">Category *</label>
+       
+                <select asp-for="Category" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white">
+                    <option value="">Select category...</option>
+                    <option value="Educators">For Educators</option>
+                    <option value="Parents">For Parents</option>
+                    <option value="Professionals">For Professionals</option>
+                    <option value="General">General</option>
+                </select>
+                <span asp-validation-for="Category" class="text-sm text-red-700"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label asp-for="StartDateTime" class="block text-sm font-semibold text-gray-900 mb-2">
+                        Start Date &amp; Time (SAST) *
+                    </label>
+                    <input asp-for="StartDateTime" type="datetime-local"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <span asp-validation-for="StartDateTime" class="text-sm text-red-700"></span>
+                </div>
+                <div>
+                    <label asp-for="EndDateTime" class="block text-sm font-semibold text-gray-900 mb-2">
+                        End Date &amp; Time (SAST) *
+                    </label>
+                    <input asp-for="EndDateTime" type="datetime-local"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <span asp-validation-for="EndDateTime" class="text-sm text-red-700"></span>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label asp-for="Price" class="block text-sm font-semibold text-gray-900 mb-2">Price (ZAR) *</label>
+                    <input asp-for="Price" type="number" step="0.01" min="0" placeholder="150"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    @* Payfast rejects anything under R5.00. Zero is fine — free
+                       webinars skip the gateway and confirm immediately. *@
+                    <p class="mt-1 text-xs text-gray-500">Use 0 for a free webinar. Paid webinars must be at least R5.00.</p>
+                    <span asp-validation-for="Price" class="text-sm text-red-700"></span>
+                </div>
+                <div>
+                    <label asp-for="Capacity" class="block text-sm font-semibold text-gray-900 mb-2">Max Capacity *</label>
+                    <input asp-for="Capacity" type="number" min="1" placeholder="30"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                    <span asp-validation-for="Capacity" class="text-sm text-red-700"></span>
+                </div>
+            </div>
+
+            <div>
+                <label asp-for="CpdPoints" class="block text-sm font-semibold text-gray-900 mb-2">CPD Points Awarded</label>
+                <input asp-for="CpdPoints" type="number" min="0" placeholder="5"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <p class="mt-1 text-xs text-gray-500">Use 0 for sessions that do not carry CPD accreditation.</p>
+                <span asp-validation-for="CpdPoints" class="text-sm text-red-700"></span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div>
+                    <label asp-for="PresenterName" class="block text-sm font-semibold text-gray-900 mb-2">Presenter Name</label>
+                    <input asp-for="PresenterName"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </div>
+                <div>
+                    <label asp-for="FeaturedImageUrl" class="block text-sm font-semibold text-gray-900 mb-2">Featured Image URL</label>
+                    <input asp-for="FeaturedImageUrl" placeholder="/images/webinars/autism.jpg"
+                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                </div>
+            </div>
+
+            <div>
+                <label asp-for="PresenterBio" class="block text-sm font-semibold text-gray-900 mb-2">Presenter Biography</label>
+                <textarea asp-for="PresenterBio" rows="3"
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
             </div>
-            
-            <!-- Category -->
+
             <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-2">Category *</label>
-                <select name="category" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 bg-white">
-                    <option value="">Select category...</option>
-                    <option value="educators">For Educators</option>
-                    <option value="parents">For Parents</option>
-                    <option value="children">For Children</option>
-                    <option value="general">General</option>
-                </select>
+                <label asp-for="LearningOutcomesText" class="block text-sm font-semibold text-gray-900 mb-2">Learning Outcomes</label>
+                <textarea asp-for="LearningOutcomesText" rows="4"
+                    placeholder="One outcome per line&#10;Understand autism spectrum characteristics&#10;Apply neurodiversity-affirming language"
+                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500"></textarea>
+                <p class="mt-1 text-xs text-gray-500">One per line. These appear as a list on the webinar page.</p>
             </div>
-            
-            <!-- Date/Time -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-900 mb-2">Start Date & Time *</label>
-                    <input type="datetime-local" name="startDate" required
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-900 mb-2">End Date & Time *</label>
-                    <input type="datetime-local" name="endDate" required
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
-                </div>
-            </div>
-            
-            <!-- Price & Capacity -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                    <label class="block text-sm font-semibold text-gray-900 mb-2">Price (ZAR) *</label>
-                    <input type="number" name="price" required step="0.01" min="0" placeholder="150"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
-                </div>
-                <div>
-                    <label class="block text-sm font-semibold text-gray-900 mb-2">Max Capacity *</label>
-                    <input type="number" name="capacity" required min="1" placeholder="30"
-                        class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
-                </div>
-            </div>
-            
-            <!-- CPD Points -->
+
             <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-2">CPD Points Awarded *</label>
-                <input type="number" name="cpdPoints" required min="1" placeholder="5"
+                <label asp-for="TeamsJoinUrl" class="block text-sm font-semibold text-gray-900 mb-2">Teams Join Link</label>
+                <input asp-for="TeamsJoinUrl" type="url" placeholder="https://teams.microsoft.com/l/meetup-join/..."
                     class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
+                <p class="mt-1 text-xs text-gray-500">
+                    Required before publishing. Attendees only receive this once their payment is confirmed.
+                </p>
+                <span asp-validation-for="TeamsJoinUrl" class="text-sm text-red-700"></span>
             </div>
-            
-            <!-- Meeting Link -->
-            <div>
-                <label class="block text-sm font-semibold text-gray-900 mb-2">Zoom/Teams Join Link (Optional)</label>
-                <input type="url" name="joinUrl" placeholder="https://zoom.us/..."
-                    class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500">
-            </div>
-            
-            <!-- Status -->
+
             <div>
                 <label class="block text-sm font-semibold text-gray-900 mb-3">Status *</label>
                 <div class="space-y-2">
                     <label class="flex items-center">
-                        <input type="radio" name="status" value="draft" checked class="w-4 h-4">
+                        <input type="radio" asp-for="Status" value="draft" class="w-4 h-4">
                         <span class="ml-2 text-gray-900">Draft (not visible to users)</span>
                     </label>
                     <label class="flex items-center">
-                        <input type="radio" name="status" value="published" class="w-4 h-4">
+                        <input type="radio" asp-for="Status" value="published" class="w-4 h-4">
                         <span class="ml-2 text-gray-900">Published (visible to users)</span>
                     </label>
                 </div>
+                @* Webinars are always created as drafts; choosing Published
+                   triggers a second publish call, which needs the Teams link. *@
+                <p class="mt-2 text-xs text-gray-500">
+                    Publishing requires a Teams join link. You can save as a draft now and publish later.
+                </p>
             </div>
-            
-            <!-- Buttons -->
+
             <div class="flex gap-4 pt-6 border-t border-gray-200">
                 <button type="submit" class="flex-1 py-3 bg-primary-600 text-white rounded-lg hover:bg-primary-700 font-bold">
                     Save Webinar
                 </button>
-                <a href="/admin/webinars" class="flex-1 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-bold text-center">
+                <a asp-action="Index" class="flex-1 py-3 border-2 border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 font-bold text-center">
                     Cancel
                 </a>
             </div>
         </form>
     </div>
 </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

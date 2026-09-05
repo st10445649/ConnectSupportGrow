@@ -6,3 +6,8 @@ public class ErrorViewModel
 
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
 }
+
+public class ApiErrorModel
+{
+    public string Message { get; set; } = string.Empty;
+}
