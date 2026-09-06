@@ -10,14 +10,18 @@ public class SendGridEmailService : IEmailService
 {
     private readonly ISendGridClient _client;
     private readonly EmailOptions _options;
+
+    private readonly ICalendarService _calendar;
     private readonly ILogger<SendGridEmailService> _logger;
 
     public SendGridEmailService(
         ISendGridClient client,
+        ICalendarService calendar,
         IOptions<EmailOptions> options,
         ILogger<SendGridEmailService> logger)
     {
         _client = client;
+        _calendar = calendar;
         _options = options.Value;
         _logger = logger;
     }
@@ -28,6 +32,9 @@ public class SendGridEmailService : IEmailService
         var (subject, html, text) = EmailTemplates.BookingConfirmation(booking, _options.ClientBaseUrl);
 
         var message = BuildMessage(booking.ToEmail, booking.FullName, subject, html, text);
+
+        AttachCalendar(message, _calendar.BuildInvitation(booking, OrganiserEmail), "REQUEST",
+            $"{booking.BookingReference}.ics");
 
         return await SendAsync(message, "booking confirmation", booking.ToEmail, ct);
     }
@@ -107,6 +114,17 @@ public class SendGridEmailService : IEmailService
             htmlContent: html);
     }
 
+        private static void AttachCalendar(
+        SendGridMessage message, string icsContent, string method, string fileName)
+    {
+        var base64 = Convert.ToBase64String(Encoding.UTF8.GetBytes(icsContent));
+ 
+        message.AddAttachment(
+            filename: fileName,
+            base64Content: base64,
+            type: $"text/calendar; charset=utf-8; method={method}",
+            disposition: "attachment");
+    }
 
     private async Task<bool> SendAsync(
         SendGridMessage message, string kind, string recipient, CancellationToken ct)
