@@ -69,4 +69,32 @@ public static class PayFastSignatureHelper
             Encoding.UTF8.GetBytes(expected),
             Encoding.UTF8.GetBytes(received.ToLowerInvariant()));
     }
+
+    public static string BuildParameterString(
+    IEnumerable<KeyValuePair<string, string?>> parameters,
+    string? passphrase = null,
+    bool skipEmptyValues = true)
+{
+    var builder = new StringBuilder();
+
+    foreach (var (key, value) in parameters)
+    {
+        if (skipEmptyValues && string.IsNullOrEmpty(value)) continue;
+
+        if (builder.Length > 0) builder.Append('&');
+
+        builder.Append(key).Append('=').Append(UrlEncode((value ?? string.Empty).Trim()));
+    }
+
+    if (!string.IsNullOrWhiteSpace(passphrase))
+        builder.Append("&passphrase=").Append(UrlEncode(passphrase.Trim()));
+
+    return builder.ToString();
+}
+
+public static string GenerateSignature(
+    IEnumerable<KeyValuePair<string, string?>> parameters,
+    string? passphrase = null,
+    bool skipEmptyValues = true)
+    => Md5Hex(BuildParameterString(parameters, passphrase, skipEmptyValues));
 }

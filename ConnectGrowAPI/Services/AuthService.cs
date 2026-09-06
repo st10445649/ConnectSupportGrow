@@ -257,7 +257,7 @@ public class AuthService : IAuthService
     }
 
 
-    public async Task<Result<string?>> CreatePasswordResetTokenAsync(
+    public async Task<Result<PasswordResetToken?>> CreatePasswordResetTokenAsync(
         string email, CancellationToken ct = default)
     {
         var user = await _users.FindByEmailAsync(email.Trim().ToLowerInvariant());
@@ -265,15 +265,19 @@ public class AuthService : IAuthService
         if (user is null || !user.IsActive)
         {
             _logger.LogInformation("Password reset requested for an unknown or inactive address.");
-            return Result<string?>.Success(null);
+            return Result<PasswordResetToken?>.Success(null);
         }
 
         var token = await _users.GeneratePasswordResetTokenAsync(user);
 
         _logger.LogInformation("Password reset token generated for user {UserId}.", user.Id);
 
-        //will be ammended whend doing email integration
-        return Result<string?>.Success(token);
+        return Result<PasswordResetToken?>.Success(new PasswordResetToken
+        {
+            Token = token,
+            Email = user.Email ?? email,
+            FirstName = string.IsNullOrWhiteSpace(user.FirstName) ? "there" : user.FirstName
+        });
     }
 
     public async Task<Result> ResetPasswordAsync(

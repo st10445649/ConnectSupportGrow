@@ -102,10 +102,11 @@ app.UseForwardedHeaders();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
+    app.UseHttpsRedirection();
     app.UseHsts();
 }
  
-app.UseHttpsRedirection();
+
 app.UseStaticFiles();
 app.UseRouting();
  

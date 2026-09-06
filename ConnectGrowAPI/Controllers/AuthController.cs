@@ -1,7 +1,7 @@
-
 using ConnectGrowAPI.Controllers;
 using ConnectGrowAPI.Dtos;
 using ConnectGrowAPI.Services;
+using ConnectGrowAPI.Services.Email;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -18,12 +18,21 @@ public class AuthController : ApiControllerBase
     private readonly IAuthService _auth;
     private readonly JwtOptions _jwt;
     private readonly IWebHostEnvironment _env;
+    private readonly IEmailService _email;
+    private readonly EmailOptions _emailOptions;
 
-    public AuthController(IAuthService auth, IOptions<JwtOptions> jwt, IWebHostEnvironment env)
+    public AuthController(
+        IAuthService auth,
+        IOptions<JwtOptions> jwt,
+        IWebHostEnvironment env,
+        IEmailService email,
+        IOptions<EmailOptions> emailOptions)
     {
         _auth = auth;
         _jwt = jwt.Value;
         _env = env;
+        _email = email;
+        _emailOptions = emailOptions.Value;
     }
 
     [HttpPost("register")]
@@ -34,6 +43,14 @@ public class AuthController : ApiControllerBase
     {
         var result = await _auth.RegisterAsync(request, ClientIp(), ct);
         if (result.IsFailure) return Problem(result);
+
+        //  A welcome email is just an additional thing, and a
+        // SendGrid failure should not fail a registration that already succeeded.
+        // because the account exists and the tokens are issued either way.
+        await _email.SendWelcomeAsync(
+            result.Value!.User.Email,
+            result.Value.User.FirstName,
+            ct);
 
         WriteAuthCookies(result.Value!);
         return Ok(result.Value);
@@ -134,10 +151,23 @@ public class AuthController : ApiControllerBase
         const string message =
             "If an account exists for that email address, a reset link has been sent.";
 
-        //JUST temp to see if token returns as email connection hasn't been added yet.
-        if (_env.IsDevelopment() && result.IsSuccess && result.Value is not null)
-            return Ok(new { message, devResetToken = result.Value });
+        if (result.IsSuccess && result.Value is not null)
+        {
+            var reset = result.Value;
 
+            var resetUrl =
+                $"{_emailOptions.ClientBaseUrl}/Account/ResetPassword" +
+                $"?email={Uri.EscapeDataString(reset.Email)}" +
+                $"&token={Uri.EscapeDataString(reset.Token)}";
+
+            await _email.SendPasswordResetAsync(reset.Email, reset.FirstName, resetUrl, ct);
+        }
+
+        // Development only
+        if (_env.IsDevelopment() && result.IsSuccess && result.Value is not null)
+            return Ok(new { message, devResetToken = result.Value.Token });
+
+    
         return Ok(new { message });
     }
 

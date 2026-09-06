@@ -62,10 +62,10 @@ public class PayFastPaymentService : IPaymentService
         {
             new("merchant_id",   _options.MerchantId),
             new("merchant_key",  _options.MerchantKey),
-            new("return_url",    _options.ReturnUrl),
-            new("cancel_url",    _options.CancelUrl),
+             new("return_url",    AppendQuery(_options.ReturnUrl, "id", booking.Id.ToString())),
+            new("cancel_url",    AppendQuery(_options.CancelUrl, "webinarId", booking.WebinarId.ToString())),
+ 
             new("notify_url",    _options.NotifyUrl),
-
             new("name_first",    Truncate(booking.User.FirstName, 100)),
             new("name_last",     Truncate(booking.User.LastName, 100)),
             new("email_address", booking.User.Email),
@@ -122,5 +122,13 @@ public class PayFastPaymentService : IPaymentService
 
         var trimmed = value.Trim();
         return trimmed.Length <= maxLength ? trimmed : trimmed[..maxLength];
+    }
+
+    private static string AppendQuery(string url, string key, string value)
+    {
+        if (string.IsNullOrWhiteSpace(url)) return url;
+ 
+        var separator = url.Contains('?') ? '&' : '?';
+        return $"{url}{separator}{key}={value}";
     }
 }

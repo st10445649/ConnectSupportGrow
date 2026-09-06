@@ -1,8 +1,6 @@
 using ConnectGrowAPI.Data;
 using ConnectGrowAPI.Models;
 using Microsoft.EntityFrameworkCore;
-
-
 using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -11,10 +9,12 @@ using ConnectGrowAPI.Api.Controllers;
 using ConnectGrowAPI.Interfaces;
 using ConnectGrowAPI.Repositories;
 using ConnectGrowAPI.Services;
-using Microsoft.AspNetCore.OpenApi;
 using ConnectGrowAPI.Api.Data;
 using Microsoft.OpenApi;
 using ConnectGrowAPI.Services.Payments;
+using ConnectGrowAPI.Services.Email;
+using SendGrid;
+using Microsoft.AspNetCore.HttpOverrides;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Configuration.AddJsonFile("appsettingsDev.json", optional: true, reloadOnChange: true);
@@ -202,6 +202,24 @@ builder.Services.AddHttpClient(PayFastItnValidator.HttpClientName, client =>
     client.DefaultRequestHeaders.Add("User-Agent", "CSG-Platform/1.0");
 });
 
+builder.Services.Configure<EmailOptions>(
+    builder.Configuration.GetSection(EmailOptions.SectionName));
+
+var sendGridKey = builder.Configuration[$"{EmailOptions.SectionName}:ApiKey"];
+
+if (!string.IsNullOrWhiteSpace(sendGridKey))
+{
+    builder.Services.AddSingleton<ISendGridClient>(_ => new SendGridClient(sendGridKey));
+    builder.Services.AddScoped<IEmailService, SendGridEmailService>();
+}
+else
+{
+    // Logs what it would have sent instead of failing. The booking flow stays
+    // testable before the account exists, and the password reset link is written
+    // to the console at Information level so the reset flow works too.
+    builder.Services.AddScoped<IEmailService, NoOpEmailService>();
+}
+
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 
@@ -229,6 +247,14 @@ builder.Services.AddSwaggerGen(options =>
     });
 });
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
  
 var app = builder.Build();
  
@@ -246,7 +272,11 @@ else
     app.UseHsts();
 }
  
-app.UseHttpsRedirection();
+if (!app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection();
+}
+
 app.UseCors(ClientCorsPolicy);
  
 app.UseAuthentication();

@@ -123,3 +123,16 @@ public class RefreshTokenRequest
 {
     public string? RefreshToken { get; set; }
 }
+
+
+// Result of a password reset request.
+// Carries the recipient's name and email alongside the token
+public class PasswordResetToken
+{
+    public string Token { get; set; } = string.Empty;
+
+    //The stored address, not what the caller typed. Differs in casing or whitespace.
+    public string Email { get; set; } = string.Empty;
+
+    public string FirstName { get; set; } = string.Empty;
+}

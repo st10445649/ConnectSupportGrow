@@ -53,8 +53,8 @@ public class PayFastItnValidator : IPayFastItnValidator
         // Everything except the signature itself, in the order it arrived.
         var signable = form.Where(f => f.Key != "signature").ToList();
 
-        var expected = PayFastSignatureHelper.GenerateSignature(signable, _options.Passphrase);
-
+        var expected = PayFastSignatureHelper.GenerateSignature(
+    signable, _options.Passphrase, skipEmptyValues: false);
         if (!PayFastSignatureHelper.SignaturesMatch(expected, received))
         {
             _logger.LogWarning(

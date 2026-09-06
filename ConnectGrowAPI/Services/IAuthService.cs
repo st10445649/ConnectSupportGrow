@@ -15,8 +15,9 @@ public interface IAuthService
 
     // Generates a password reset token. Returns the token so the caller can
     // email it; the endpoint never returns it to the client outside development.
-    
-    Task<Result<string?>> CreatePasswordResetTokenAsync(string email, CancellationToken ct = default);
+    Task<Result<PasswordResetToken?>> CreatePasswordResetTokenAsync(string email, CancellationToken ct = default);
 
     Task<Result> ResetPasswordAsync(ResetPasswordRequest request, CancellationToken ct = default);
+
+    
 }
