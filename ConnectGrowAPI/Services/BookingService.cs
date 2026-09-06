@@ -3,6 +3,7 @@ using ConnectGrowAPI.Data;
 using ConnectGrowAPI.Dtos;
 using ConnectGrowAPI.Interfaces;
 using ConnectGrowAPI.Models;
+using ConnectGrowAPI.Services.Email;
 using Microsoft.EntityFrameworkCore;
 
 namespace ConnectGrowAPI.Services;
@@ -43,6 +44,7 @@ public class BookingService : IBookingService
     private readonly IBookingRepository _bookings;
     private readonly IWebinarRepository _webinars;
     private readonly IPaymentService _payments;
+    private readonly IEmailService _email;
     private readonly ApplicationDbContext _db;
     private readonly ILogger<BookingService> _logger;
     private readonly TimeSpan _holdWindow;
@@ -51,12 +53,14 @@ public class BookingService : IBookingService
         IBookingRepository bookings,
         IWebinarRepository webinars,
         IPaymentService payments,
+        IEmailService email,
         ApplicationDbContext db,
         IConfiguration config,
         ILogger<BookingService> logger)
     {
         _bookings = bookings;
         _webinars = webinars;
+        _email = email;
         _payments = payments;
         _db = db;
         _logger = logger;
@@ -339,9 +343,48 @@ public class BookingService : IBookingService
         _logger.LogInformation(
             "Booking {Reference} confirmed as paid ({Amount}).", bookingReference, amountPaid);
 
-        // The BookingConfirmedEvent is raised here once the event dispatcher is
-        // in place — email, ICS, receipt and CPD handlers subscribe to it.
+        await SendConfirmationEmailsAsync(booking, ct);
         return Result.Success();
+    }
+
+    private async Task SendConfirmationEmailsAsync(Booking booking, CancellationToken ct)
+    {
+        try
+        {
+            var model = new BookingEmailModel
+            {
+                ToEmail = booking.User?.Email ?? string.Empty,
+                FirstName = booking.User?.FirstName ?? "there",
+                FullName = booking.User?.FullName ?? string.Empty,
+                BookingReference = booking.BookingReference,
+                Amount = booking.Amount,
+                PaidAt = booking.PaidAt,
+                WebinarId = booking.WebinarId,
+                WebinarTitle = booking.Webinar?.Title ?? string.Empty,
+                WebinarDescription = booking.Webinar?.Description ?? string.Empty,
+                StartDateTimeUtc = booking.Webinar?.StartDateTime ?? default,
+                EndDateTimeUtc = booking.Webinar?.EndDateTime ?? default,
+                CpdPoints = booking.Webinar?.CpdPoints ?? 0,
+                JoinUrl = booking.Webinar?.TeamsJoinUrl
+            };
+
+            if (string.IsNullOrWhiteSpace(model.ToEmail))
+            {
+                _logger.LogError(
+                    "Booking {Reference} has no attendee email; confirmation not sent.",
+                    booking.BookingReference);
+                return;
+            }
+
+            await _email.SendBookingConfirmationAsync(model, ct);
+            await _email.SendAdminBookingNotificationAsync(model, ct);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex,
+                "Confirmation emails failed for {Reference}. The booking is still confirmed.",
+                booking.BookingReference);
+        }
     }
 
     public async Task<Result> RecordFailedPaymentAsync(
