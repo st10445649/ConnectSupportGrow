@@ -231,7 +231,7 @@ public class BookingService : IBookingService
 
     
 
-    public async Task<Result> ConfirmPaymentAsync(
+       public async Task<Result> ConfirmPaymentAsync(
         string bookingReference,
         string gatewayReference,
         decimal amountPaid,
@@ -239,55 +239,81 @@ public class BookingService : IBookingService
         string? rawPayload,
         CancellationToken ct = default)
     {
+        var strategy = _db.Database.CreateExecutionStrategy();
+ 
+        var (result, confirmedBooking) = await strategy.ExecuteAsync(async () =>
+        {
+            _db.ChangeTracker.Clear();
+ 
+            return await ConfirmPaymentCoreAsync(
+                bookingReference, gatewayReference, amountPaid,
+                paymentMethod, rawPayload, ct);
+        });
+ 
+        if (result.IsSuccess && confirmedBooking is not null)
+        {
+            await SendConfirmationEmailsAsync(confirmedBooking, ct);
+        }
+ 
+        return result;
+    }
+ 
+    private async Task<(Result Result, Booking? Confirmed)> ConfirmPaymentCoreAsync(
+        string bookingReference,
+        string gatewayReference,
+        decimal amountPaid,
+        string paymentMethod,
+        string? rawPayload,
+        CancellationToken ct)
+    {
         await using var tx = await _db.Database.BeginTransactionAsync(ct);
-
+ 
         var booking = await _db.Bookings
             .Include(b => b.Webinar)
+            .Include(b => b.User)
             .Include(b => b.Transaction)
             .FirstOrDefaultAsync(b => b.BookingReference == bookingReference, ct);
-
+ 
         if (booking is null)
         {
             _logger.LogWarning(
                 "Payment callback referenced unknown booking {Reference}.", bookingReference);
-            return Result.NotFound("Booking not found.");
+            return (Result.NotFound("Booking not found."), null);
         }
-
-        // Idempotency: the gateway retries its callback until it gets a 200, so
-        // a repeat for an already-confirmed booking is a success, not an error.
+ 
         if (booking.Status == BookingStatus.Paid || booking.Status == BookingStatus.Attended)
         {
             _logger.LogInformation(
                 "Duplicate payment callback for already-paid booking {Reference}. Ignored.",
                 bookingReference);
+ 
             await tx.CommitAsync(ct);
-            return Result.Success();
+            return (Result.Success(), null);
         }
-
+ 
         if (booking.Status == BookingStatus.Cancelled)
         {
             _logger.LogWarning(
                 "Payment received for cancelled booking {Reference}. Flagged for manual review.",
                 bookingReference);
-            return Result.Conflict("Booking was cancelled.");
+ 
+            return (Result.Conflict("Booking was cancelled."), null);
         }
-
-        // Amount check. The caller should already have verified this against the
-        // gateway payload; repeating it here means the invariant holds no matter
-        // which code path reaches this method.
+ 
         if (amountPaid != booking.Amount)
         {
             _logger.LogError(
                 "Amount mismatch on booking {Reference}: expected {Expected}, received {Received}.",
                 bookingReference, booking.Amount, amountPaid);
-            return Result.Invalid("Payment amount does not match the booking total.");
+ 
+            return (Result.Invalid("Payment amount does not match the booking total."), null);
         }
-
+ 
         booking.Status = BookingStatus.Paid;
         booking.PaymentReference = gatewayReference;
         booking.PaidAt = DateTime.UtcNow;
         booking.UpdatedAt = DateTime.UtcNow;
-
+ 
         if (booking.Transaction is null)
         {
             _db.Transactions.Add(new Transaction
@@ -310,43 +336,39 @@ public class BookingService : IBookingService
             booking.Transaction.CompletedAt = DateTime.UtcNow;
             booking.Transaction.ResponseData = rawPayload;
         }
-
+ 
         try
         {
             await _db.SaveChangesAsync(ct);
         }
         catch (DbUpdateException ex) when (IsUniqueViolation(ex))
         {
-            // The unique index on transaction_reference caught a concurrent
-            // duplicate callback. The other request is doing the work.
             _logger.LogInformation(
                 "Concurrent duplicate callback for {Reference} rejected by unique index.",
                 bookingReference);
+ 
             await tx.RollbackAsync(ct);
-            return Result.Success();
+            return (Result.Success(), null);
         }
-
-        // Atomic increment. Deliberately unconditional: the money has been taken,
-        // so an oversell is a business decision for the admin, not grounds to
-        // reject a paid booking.
+ 
         await _webinars.IncrementBookingCountAsync(booking.WebinarId, ct);
-
-        if (booking.Webinar is not null && booking.Webinar.CurrentBookings + 1 > booking.Webinar.Capacity)
+ 
+        if (booking.Webinar is not null &&
+            booking.Webinar.CurrentBookings + 1 > booking.Webinar.Capacity)
         {
             _logger.LogWarning(
                 "Webinar {WebinarId} is oversold after confirming {Reference}. Admin review needed.",
                 booking.WebinarId, bookingReference);
         }
-
+ 
         await tx.CommitAsync(ct);
-
+ 
         _logger.LogInformation(
             "Booking {Reference} confirmed as paid ({Amount}).", bookingReference, amountPaid);
-
-        await SendConfirmationEmailsAsync(booking, ct);
-        return Result.Success();
+ 
+        return (Result.Success(), booking);
     }
-
+ 
     private async Task SendConfirmationEmailsAsync(Booking booking, CancellationToken ct)
     {
         try
@@ -431,14 +453,6 @@ public class BookingService : IBookingService
         return Result.Success();
     }
 
-    // -----------------------------------------------------------------------
-    // Helpers
-    // -----------------------------------------------------------------------
-
-    /// <summary>
-    /// Reference format: CSG-YYMMDD-XXXXXX. Readable enough to quote over the
-    /// phone, random enough not to be guessable or enumerable.
-    /// </summary>
     private static string GenerateReference()
     {
         const string alphabet = "ABCDEFGHJKMNPQRSTUVWXYZ23456789"; // no I, L, O, 0, 1
@@ -451,7 +465,6 @@ public class BookingService : IBookingService
         return $"CSG-{DateTime.UtcNow:yyMMdd}-{new string(chars)}";
     }
 
-    /// <summary>PostgreSQL SQLSTATE 23505 = unique_violation.</summary>
     private static bool IsUniqueViolation(DbUpdateException ex) =>
         ex.InnerException is Npgsql.PostgresException { SqlState: "23505" };
 
