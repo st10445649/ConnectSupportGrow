@@ -14,7 +14,7 @@ public class EmailOptions
    //https://dev.to/edudeveloper/simple-email-sending-api-with-net-2bk3 
     public const string SectionName = "Email";
 
-    public string ApiKey { get; set; } = Environment.GetEnvironmentVariable("SendGrid_ApiKey");
+    public string ApiKey { get; set; } = string.Empty;
 
     public string FromEmail { get; set; } = "solutionsshieldtech@gmail.com";
 
